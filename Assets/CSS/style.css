@@ -1,0 +1,91 @@
+
+body{
+    background-color: rgb(24, 46, 24);
+    display: flex;
+    flex-direction: column
+}
+
+.row{
+    margin-top: .4rem;
+    margin-bottom: .4rem;
+}
+
+.bg-light{
+    padding: .7rem;
+    font-weight: bold;
+    background-color: rgba(106, 161, 106, 0.877) !important;
+    box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mainContainer {
+    width: 95%;
+    margin: auto;
+    margin-top: 2rem;
+    border: white;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: .5rem;
+    padding: 2rem 1rem;
+    background-color: rgb(25, 83, 83);
+    color: white;
+}
+
+.dispArea {
+    background-color: darkcyan;
+    width: auto;
+    padding: .2rem .5rem;
+    border: white;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: .3rem;
+    box-shadow: outset 0px 0px 5px 5px black;
+}
+
+.weatherDisplayArea{
+    display: flex;
+    flex-direction: row;
+    /* overflow: hidden; */
+    background-color: darkcyan;
+    border: white;
+    border-style: solid;
+    border-width: 1.5px;
+    border-radius: .5rem;
+}
+
+.table{
+    background-color: darkcyan;
+    padding: .2rem .5rem;
+    border: white;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: .3rem;
+}
+
+.tableSection{
+    background-color: darkcyan;
+}
+
+.imgCont{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    margin: 2.5%;
+    widows: 20%;
+    height: auto;
+
+}
+
+.favoriteButtons{
+    text-align: center;
+}
+
+.favButts{
+    font-size: 1rem;
+    padding: .2rem .7rem;
+    margin-top: .5rem;
+    color: white;
+    background-color: black;
+    border-style: solid;
+    border-color: lightgreen;
+    border-radius: 5px;
+}
