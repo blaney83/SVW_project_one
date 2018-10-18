@@ -5,6 +5,23 @@ body{
     flex-direction: column
 }
 
+#loginScreen{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 0px;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: coral;
+    z-index: 4; 
+    opacity: 1;
+}
+
+#signinButton{
+    width: 15%;
+}
+
 .row{
     margin-top: .4rem;
     margin-bottom: .4rem;
