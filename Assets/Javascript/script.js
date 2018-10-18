@@ -37,6 +37,10 @@ $(document).ready(function () {
         });
     });
     //! End create Email/Password Login
+    // JAVASCRIPT FOR ON CLICK
+                //making the sign in screen go bye bye
+    // $(".signInPage").css({ "opacity": "0" })
+    //     $(".signInPage").css({ "z-index": "0" })
 
     // ? This is the firebase given popup for Google sign in function
     // //Sign-In with Google Redirect page
