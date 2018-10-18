@@ -89,3 +89,16 @@ body{
     border-color: lightgreen;
     border-radius: 5px;
 }
+
+/* weather styling */
+h6{
+    font-size: 14px;
+    font-weight: 900px;
+}
+#tempMax, #tempMin, #current{
+    font-size: 22px;
+}
+ #summary{
+     font-size: 14px;
+    
+ }
