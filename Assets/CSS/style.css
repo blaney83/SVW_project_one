@@ -136,7 +136,6 @@ h6{
     width: 100%;
     height: auto;
 }
-<<<<<<< HEAD
 .signInPage{
     position: fixed;
     top: 0px;
@@ -146,7 +145,6 @@ h6{
     z-index: 4; 
     opacity: 1;
 }
-=======
 .icon-destination{
     max-width: 70px;
     width: 100%;
@@ -159,4 +157,3 @@ h6{
     font-size: 14px;
 }    
 /* end of weather styling */
->>>>>>> 660609eab61baad76e9a6bd83947b5a7ff2ea55f
