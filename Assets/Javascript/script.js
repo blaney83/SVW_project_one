@@ -110,5 +110,16 @@ function createAccount() {
         });
     });
 
+    $("#dest-btn").on("click", function(event) {
+        event.preventDefault();
+
+        var destInput = $("#dest-input").val().trim();
+
+        database.ref().push({
+            destination: destInput
+        });
+
+        $("form").trigger("reset");
+    })
 
 });
