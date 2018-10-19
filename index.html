@@ -73,8 +73,12 @@
                     </div>
                     <div id="dest-search" class="col-sm-12 col-md-6">
                         <form class="form-inline my-2 my-lg-0">
-                            <input id="dest-input" class="form-control mr-sm-2" type="search" placeholder="Destination" aria-label="Destination">
-                            <button id="dest-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add Destination</button>
+                            <input id="dest-name" class="form-control mr-sm-2" type="search" placeholder="Destination Name"
+                                aria-label="Destination">
+                            <input id="dest-input" class="form-control mr-sm-2" type="search" placeholder="Destination Address"
+                                aria-label="Destination">
+                            <button id="dest-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add New
+                                Destination</button>
                         </form>
                     </div>
                 </div>
@@ -157,7 +161,7 @@
                     </div>
                 </div>
                 <div class="row favRow justify-content-center">
-                    <div class="col-12 favoriteButtons">
+                    <div id="new-destinations" class="col-12 favoriteButtons">
                         <button class="favButts" id="savedDest1">Home</button>
                         <button class="favButts" id="savedDest2">Work</button>
                         <button class="favButts" id="savedDest3">School</button>

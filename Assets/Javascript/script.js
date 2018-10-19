@@ -11,20 +11,21 @@ $(document).ready(function () {
     };
 
     firebase.initializeApp(config);
-    
+
     var database = firebase.database();
 
-//? Sign-in or create account functions below
-function createAccount() {
+
+    //? Sign-in or create account functions below
+    function createAccount() {
         event.preventDefault();
         console.log("wooo")
         var displayID = $("#userNameEntry").val().trim();
         var email = $("#emailEntry").val().trim();
         var password = $("#passwordEntry").val().trim();
 
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
             //add the display name after the user is done being created 
-            firebase.auth().currentUser.updateProfile({ displayName: displayID});
+            firebase.auth().currentUser.updateProfile({ displayName: displayID });
         });
 
     };
@@ -39,6 +40,7 @@ function createAccount() {
 
 
     function authStateChangeListener(user) {
+        var userID = firebase.auth().currentUser.displayName
         //signin
         if (user) {
             //perform login operations
@@ -48,7 +50,7 @@ function createAccount() {
             $(".signInPage").css({ "z-index": "0" })
             // Chat.onlogin();
             // Game.onlogin();
-            console.log("Welcome Back " + firebase.auth().currentUser.displayName);
+            console.log("Welcome Back " + userID);
         } else {
             // signout
             // window.location.reload();
@@ -56,12 +58,12 @@ function createAccount() {
     };
 
     $(document).on("submit", "#signUp", createAccount)
-    
+
     $(document).on("submit", "#signIn", signInFn)
-    
+
     firebase.auth().onAuthStateChanged(authStateChangeListener);
-    
-    
+
+
     // ? This is the firebase given popup for Google sign in function
     // //Sign-In with Google Redirect page
     // var provider = new firebase.auth.GoogleAuthProvider();
@@ -87,39 +89,55 @@ function createAccount() {
     //     console.log(error);
     // });
     // ? End the firebase given popup for Google sign in function
-    
+
     //Display Current Time  
-    function getTime(){
+    function getTime() {
         var currentTime = moment().format("hh:mm a");
         $("#time").text(currentTime);
     }
-    
-    function setTime(){
+
+    function setTime() {
         setInterval(getTime, 1000);
     }
 
     setTime();
 
+    
     //Currently set to show communication to firebase DB, will set to contain address, or coordinates of saved location.
     var name = "Oops, I did it again!";
-    
-    $("#savedDest1").on("click", function () {
-        console.log(name);
-        database.ref().push({
-            name: name
+
+        $("#savedDest1").on("click", function () {
+            console.log(name);
         });
+
+        //Saves information for new destination
+        $("#dest-btn").on("click", function (event) {
+            event.preventDefault();
+            // var countDestinations = 0;
+            
+            // countDestinations++;
+            
+            var destInput = $("#dest-input").val().trim();
+            var destName = $("#dest-name").val().trim();
+            var newDest = {
+                name: destName,
+                address: destInput
+            };
+            
+            database.ref("/savedDestination:" + destName).push(newDest);
+            
+            
+        });
+        //Adds new destination button
+        database.ref().on("child_added", function (childSnapshot) {
+            console.log(childSnapshot.val());
+
+            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+            
+            $("#new-destinations").append($newDest);
+            
+            console.log($newDest);
+            
+            $("form").trigger("reset");
     });
-
-    $("#dest-btn").on("click", function(event) {
-        event.preventDefault();
-
-        var destInput = $("#dest-input").val().trim();
-
-        database.ref().push({
-            destination: destInput
-        });
-
-        $("form").trigger("reset");
-    })
-
 });
