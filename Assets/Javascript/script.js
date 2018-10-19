@@ -11,37 +11,57 @@ $(document).ready(function () {
     };
 
     firebase.initializeApp(config);
-
-    var email = prompt("Enter email to login")
-    var password = prompt("Enter password to login")
-    //todo creat new user/ existing user, dpending on selection it will send you to create an account or sign-in
-    //todo use local storage to see if use has an account already
+    
     var database = firebase.database();
-    //! Start Email/Password Login (Existing User)
-    $("#existingUser").on("click", function () { 
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-    });
-});
-    //! End of Email/Password Login (Existing User)
-    //! This is to create the Email/Password Login
-    $("#createUser").on("click", function () {
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-        });
-    });
-    //! End create Email/Password Login
-    // JAVASCRIPT FOR ON CLICK
-                //making the sign in screen go bye bye
-    // $(".signInPage").css({ "opacity": "0" })
-    //     $(".signInPage").css({ "z-index": "0" })
 
+//? Sign-in or create account functions below
+function createAccount() {
+        event.preventDefault();
+        console.log("wooo")
+        var displayID = $("#userNameEntry").val().trim();
+        var email = $("#emailEntry").val().trim();
+        var password = $("#passwordEntry").val().trim();
+
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+            //add the display name after the user is done being created 
+            firebase.auth().currentUser.updateProfile({ displayName: displayID});
+        });
+
+    };
+
+    function signInFn() {
+        event.preventDefault();
+        var email = $("#emailLogin").val().trim();
+        var password = $("#passwordLogin").val().trim();
+
+        firebase.auth().signInWithEmailAndPassword(email, password);
+    };
+
+
+    function authStateChangeListener(user) {
+        //signin
+        if (user) {
+            //perform login operations
+            event.preventDefault();
+            //change login visibility
+            $(".signInPage").css({ "opacity": "0" })
+            $(".signInPage").css({ "z-index": "0" })
+            // Chat.onlogin();
+            // Game.onlogin();
+            console.log("Welcome Back " + firebase.auth().currentUser.displayName);
+        } else {
+            // signout
+            // window.location.reload();
+        };
+    };
+
+    $(document).on("submit", "#signUp", createAccount)
+    
+    $(document).on("submit", "#signIn", signInFn)
+    
+    firebase.auth().onAuthStateChanged(authStateChangeListener);
+    
+    
     // ? This is the firebase given popup for Google sign in function
     // //Sign-In with Google Redirect page
     // var provider = new firebase.auth.GoogleAuthProvider();
@@ -67,13 +87,21 @@ $(document).ready(function () {
     //     console.log(error);
     // });
     // ? End the firebase given popup for Google sign in function
+    
+    //Display Current Time
+    var currentTime = moment().format("hh:mm a");
 
-    var name = "Shakira";
+    $("#time").text(currentTime);
 
+    //Currently set to show communication to firebase DB, will set to contain address, or coordinates of saved location.
+    var name = "Oops, I did it again!";
+    
     $("#savedDest1").on("click", function () {
         console.log(name);
         database.ref().push({
             name: name
         });
     });
+
+
 });

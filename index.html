@@ -14,22 +14,26 @@
 </head>
 
 <body>
-    <button id="createUser">
-        New User
-    </button>
-    <button  id="existingUser">
-        Existing User
-    </button>
-    <div class="container justify-content-center" id="loginScreen">
-            Enter Username
-            <br>
-            <input type="text" value="Enter a Username" id="userNameEntry">
-            Password
-            <br>
-            <input type="text" value="Enter a Password" id="userNameEntry">
-            <br>
-            <input type="submit" id="signinButton" value="START">
-            
+    <div class="signInPage">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <h1>Sign Up</h1>
+                    <form action="" id="signUp">
+                        <input type="text" placeholder="Enter a Username" id="userNameEntry">
+                        <input type="text" placeholder="Enter an Email" id="emailEntry">
+                        <input type="text" placeholder="Enter a Password" id="passwordEntry">
+                        <input id="createUser" type="submit" value="START">
+                    </form>
+                    <h1>Sign In</h1>
+                    <form action="" id="signIn">
+                        <input type="text" placeholder="Enter an Email" id="emailLogin">
+                        <input type="text" placeholder="Enter a Password" id="passwordLogin">
+                        <input id="signinUser" type="submit" placeholder="Sign-in">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -55,13 +59,19 @@
         <div class="row mainRow justify-content-center">
             <div class="col-12 mainColumn">
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <h5>Current Location: </h5>
-                        <span class="location dispArea" id="GPS">
-                            Home (40.741895, -73.989308)
-                        </span>
+                    <div id="current-items" class="col-sm-12 col-md-6">
+                        <div>
+                            <h5>Current Location: </h5>
+                            <span class="location dispArea" id="GPS">
+                                Home (40.741895, -73.989308)
+                            </span>
+                        </div>
+                        <div>
+                            <h5>Current Time: </h5>
+                            <span class="time dispArea" id="time"></span>
+                        </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
+                    <div id="dest-search" class="col-sm-12 col-md-6">
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Destination" aria-label="Destination">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add Destination</button>
@@ -137,7 +147,7 @@
                             <tbody class="tableSection">
                                 <tr>
                                     <th scope="row">
-                                        <!-- populate with the value of the buttons -->
+                                        <!-- populate with the placeholder of the buttons -->
                                         Home
                                     </th>
                                     <td>35 min 23 sec</td>
@@ -146,7 +156,7 @@
                                 </tr>
                                 <tr class="tableSection">
                                     <th scope="row">
-                                        <!-- populate with the value of the buttons -->
+                                        <!-- populate with the placeholder of the buttons -->
                                         Work
                                     </th>
                                     <td>42 min 57 sec</td>
@@ -155,7 +165,7 @@
                                 </tr>
                                 <tr class="tableSection">
                                     <th scope="row">
-                                        <!-- populate with the value of the buttons -->
+                                        <!-- populate with the placeholder of the buttons -->
                                         School
                                     </th>
                                     <td>12 min 09 sec</td>
@@ -178,6 +188,8 @@
     <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
     <!-- Google API -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Moment CDN -->
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
     <!-- AJAX JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
