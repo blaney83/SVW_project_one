@@ -88,25 +88,30 @@
                 </div>
                 <div class="row">
                     <div class="col-12 weatherDiv">
-                        <h5>Weather During Travel</h5>
+                        <h5>Weather During Travel:
+                            <span class=weather></span>
+                        </h5>
                     </div>
                     <div class="col-12">
                         <div class="weatherDisplayArea table-responsive-md">
-                            <div class="imgCont">
-                                <img src="http://placehold.it/75x75/" alt="">
-                                70 degrees 4:25PM
+                            <div class="col-3">
+                                <h6>Current Degrees (Fahrenheit): </h6>
+                                <span id="current"></span>
+                                <div class="icon-weather"></div>
                             </div>
-                            <div class="imgCont">
-                                <img src="http://placehold.it/75x75/" alt="">
-                                68 degrees 4:37PM
+                            <div class="col-3">
+                                <h6>Temperature High (Fahrenheit): </h6>
+                                <span id="tempMax"></span>
+                                <div class="icon-weather"></div>
                             </div>
-                            <div class="imgCont">
-                                <img src="http://placehold.it/75x75/" alt="">
-                                68 degrees 4:51PM
+                            <div class="col-3">
+                                <h6>Temperature Low (Fahrenheit): </h6>
+                                <span id="tempMin"></span>
+                                <div class="icon-weather"></div>
                             </div>
-                            <div class="imgCont">
-                                <img src="http://placehold.it/75x75/" alt="">
-                                67 degrees 5:01PM
+                            <div class="col-3">
+                                <h6>Weather Description: </h6>
+                                <span id="summary"></span>
                             </div>
                         </div>
                     </div>
@@ -181,6 +186,7 @@
         crossorigin="anonymous"></script>
     <!-- Local JavaScript -->
     <script src="Assets/Javascript/script.js"></script>
+    <script src="Assets/Javascript/weather.js"></script>
 </body>
 
 </html>
