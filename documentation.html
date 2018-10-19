@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +12,41 @@
 </head>
 
 <body>
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="index.html" role="tab"
-                aria-controls="nav-home" aria-selected="false">Home</a>
-            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="documentation.html" role="tab"
-                aria-controls="nav-profile" aria-selected="true">Profile</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Let's Travel!</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Let's Travel<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="documentation.html">Documentation</a>
+                </li>
+            </ul>
         </div>
     </nav>
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+
+    <div class="container mainContainer">
+        <div class="row mainRow justify-content-center">
+            <div class="col-12 mainColumn">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi non quisquam, explicabo voluptatibus pariatur nemo repellendus itaque nostrum ipsam, eaque unde cupiditate optio nihil? Qui distinctio labore soluta numquam quisquam!
+                    <br>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum dolor assumenda provident enim, officiis reiciendis at ducimus suscipit cupiditate? Similique nobis officia debitis soluta sapiente, id eos quidem ratione optio?
+                    <br>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum reprehenderit incidunt culpa, consequuntur asperiores, alias voluptatem illo quasi molestiae nulla adipisci corrupti. Nesciunt at temporibus facere harum nulla enim quo.
+                    <br>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores tempore culpa fuga, reprehenderit vitae, eum vero ipsum nulla illo tempora nam! Ea, dolor eveniet. Ipsam molestiae fugiat obcaecati aut eveniet?
+                </p>
+                   
+            </div>
+        </div>
     </div>
-    
-
-
-
-
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -37,6 +54,5 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-</body>
-
+</body> 
 </html>
