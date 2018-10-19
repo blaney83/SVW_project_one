@@ -88,10 +88,17 @@ function createAccount() {
     // });
     // ? End the firebase given popup for Google sign in function
     
-    //Display Current Time
-    var currentTime = moment().format("hh:mm a");
+    //Display Current Time  
+    function getTime(){
+        var currentTime = moment().format("hh:mm a");
+        $("#time").text(currentTime);
+    }
+    
+    function setTime(){
+        setInterval(getTime, 1000);
+    }
 
-    $("#time").text(currentTime);
+    setTime();
 
     //Currently set to show communication to firebase DB, will set to contain address, or coordinates of saved location.
     var name = "Oops, I did it again!";
