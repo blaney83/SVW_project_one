@@ -35,6 +35,10 @@ h5{
     padding-top: 15px;
 }
 
+#dest-name, #dest-input{
+    margin-bottom: 10px;
+}
+
 .row{
     margin-top: .4rem;
     margin-bottom: .4rem;
