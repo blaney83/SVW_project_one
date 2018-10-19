@@ -2,14 +2,17 @@
 
 $(document).ready(function () {
 
+    //var longNlatCurrent = $("#longNLatVar")
+    var longNlatCurrent = "33.303176,-111.839866"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/33.303176,-111.839866";
+    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatCurrent;
+
 
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data)
-            console.log(data.currently.apparentTemperature);
+            // console.log(data)
+            // console.log(data.currently.apparentTemperature);
 
             var current = data.currently.apparentTemperature;
 
@@ -22,15 +25,12 @@ $(document).ready(function () {
         }
     });
     // calling weather information for current location
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/33.303176,-111.839866";
-
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.data[0].apparentTemperatureMax);
-            console.log(data.daily.data[0].apparentTemperatureMin);
-            console.log(data.daily.summary);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -60,13 +60,10 @@ $(document).ready(function () {
     });
 
     //weather icons for current location
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/33.303176,-111.839866";
-
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.icon);
+            // console.log(data.daily.icon);
             var icon = data.daily.icon
 
             var iconDiv = $("<div>");
@@ -114,15 +111,16 @@ $(document).ready(function () {
 
         }
     })
-// calling weather for destination
+    // calling weather for destination
+    var longNlatDestination = "36.106964,-112.112999"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/36.106964,-112.112999";
+    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatDestination;
 
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data)
-            console.log(data.currently.apparentTemperature);
+            // console.log(data)
+            // console.log(data.currently.apparentTemperature);
 
             var destination = data.currently.apparentTemperature;
 
@@ -135,15 +133,13 @@ $(document).ready(function () {
         }
     });
     // calling weather information for destination
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/36.106964,-112.112999";
 
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.data[0].apparentTemperatureMax);
-            console.log(data.daily.data[0].apparentTemperatureMin);
-            console.log(data.daily.summary);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -173,13 +169,10 @@ $(document).ready(function () {
     });
 
     //weather icons for destination
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/36.106964,-112.112999";
-
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.icon);
+            // console.log(data.daily.icon);
             var icon = data.daily.icon
 
             var iconDiv = $("<div>");
