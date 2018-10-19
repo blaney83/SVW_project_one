@@ -13,6 +13,9 @@ $(document).ready(function () {
         success: function (data) {
             // console.log(data)
             // console.log(data.currently.apparentTemperature);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var current = data.currently.apparentTemperature;
 
@@ -22,15 +25,6 @@ $(document).ready(function () {
 
             $("#current").prepend(current);
 
-        }
-    });
-    // calling weather information for current location
-    $.ajax({
-        url: proxy + apiLinkDS,
-        success: function (data) {
-            // console.log(data.daily.data[0].apparentTemperatureMax);
-            // console.log(data.daily.data[0].apparentTemperatureMin);
-            // console.log(data.daily.summary);
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -56,14 +50,6 @@ $(document).ready(function () {
 
             $("#summary").prepend(summary);
 
-        }
-    });
-
-    //weather icons for current location
-    $.ajax({
-        url: proxy + apiLinkDS,
-        success: function (data) {
-            // console.log(data.daily.icon);
             var icon = data.daily.icon
 
             var iconDiv = $("<div>");
@@ -110,7 +96,9 @@ $(document).ready(function () {
             }
 
         }
-    })
+    });
+
+
     // calling weather for destination
     var longNlatDestination = "36.106964,-112.112999"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
@@ -120,7 +108,11 @@ $(document).ready(function () {
         url: proxy + apiLinkDS,
         success: function (data) {
             // console.log(data)
-            // console.log(data.currently.apparentTemperature);
+            //console.log(data.currently.apparentTemperature);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.icon);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var destination = data.currently.apparentTemperature;
 
@@ -129,17 +121,6 @@ $(document).ready(function () {
             destinationDiv.attr("src", destination);
 
             $("#destination").prepend(destination);
-
-        }
-    });
-    // calling weather information for destination
-
-    $.ajax({
-        url: proxy + apiLinkDS,
-        success: function (data) {
-            // console.log(data.daily.data[0].apparentTemperatureMax);
-            // console.log(data.daily.data[0].apparentTemperatureMin);
-            // console.log(data.daily.summary);
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -165,14 +146,6 @@ $(document).ready(function () {
 
             $("#summaryDestination").prepend(summary);
 
-        }
-    });
-
-    //weather icons for destination
-    $.ajax({
-        url: proxy + apiLinkDS,
-        success: function (data) {
-            // console.log(data.daily.icon);
             var icon = data.daily.icon
 
             var iconDiv = $("<div>");
@@ -219,5 +192,6 @@ $(document).ready(function () {
             }
 
         }
-    })
+    });
+
 });  
