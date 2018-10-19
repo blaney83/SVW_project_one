@@ -128,16 +128,16 @@ $(document).ready(function () {
             
             
         });
-        //Adds new destination button
-        database.ref().on("child_added", function (childSnapshot) {
-            console.log(childSnapshot.val());
+    //     //Adds new destination button
+    //     database.ref().on("child_added", function (childSnapshot) {
+    //         console.log(childSnapshot.val());
 
-            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+    //         var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
             
-            $("#new-destinations").append($newDest);
+    //         $("#new-destinations").append($newDest);
             
-            console.log($newDest);
+    //         console.log($newDest);
             
-            $("form").trigger("reset");
-    });
+    //         $("form").trigger("reset");
+    // });
 });
