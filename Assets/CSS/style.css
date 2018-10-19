@@ -102,3 +102,8 @@ h6{
      font-size: 14px;
     
  }
+.icon{
+    max-width: 70px;
+    width: 100%;
+    height: auto;
+}
