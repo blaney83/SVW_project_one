@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
 
+    //var longNlatCurrent = $("#longNLatVar")
     var longNlatCurrent = "33.303176,-111.839866"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
     var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatCurrent;
