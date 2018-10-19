@@ -2,8 +2,10 @@
 
 $(document).ready(function () {
 
+    var longNlatCurrent = "33.303176,-111.839866"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/33.303176,-111.839866";
+    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatCurrent;
+
 
     $.ajax({
         url: proxy + apiLinkDS,
@@ -22,9 +24,6 @@ $(document).ready(function () {
         }
     });
     // calling weather information for current location
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/33.303176,-111.839866";
-
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
@@ -60,9 +59,6 @@ $(document).ready(function () {
     });
 
     //weather icons for current location
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/33.303176,-111.839866";
-
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
@@ -114,9 +110,10 @@ $(document).ready(function () {
 
         }
     })
-// calling weather for destination
+    // calling weather for destination
+    var longNlatDestination = "36.106964,-112.112999"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/36.106964,-112.112999";
+    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatDestination;
 
     $.ajax({
         url: proxy + apiLinkDS,
@@ -135,8 +132,6 @@ $(document).ready(function () {
         }
     });
     // calling weather information for destination
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/36.106964,-112.112999";
 
     $.ajax({
         url: proxy + apiLinkDS,
@@ -173,9 +168,6 @@ $(document).ready(function () {
     });
 
     //weather icons for destination
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/36.106964,-112.112999";
-
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
