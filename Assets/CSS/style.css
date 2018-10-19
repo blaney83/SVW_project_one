@@ -100,10 +100,21 @@ h6{
 }
  #summary{
      font-size: 14px;
-    
  }
 .icon{
     max-width: 70px;
     width: 100%;
     height: auto;
 }
+.icon-destination{
+    max-width: 70px;
+    width: 100%;
+    height: auto;
+}
+#tempMaxDestination, #tempMinDestination, #destination{
+    font-size: 22px;
+}
+#summaryDestination{
+    font-size: 14px;
+}    
+/* end of weather styling */
