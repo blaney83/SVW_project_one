@@ -11,8 +11,8 @@ $(document).ready(function () {
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data)
-            console.log(data.currently.apparentTemperature);
+            // console.log(data)
+            // console.log(data.currently.apparentTemperature);
 
             var current = data.currently.apparentTemperature;
 
@@ -28,9 +28,9 @@ $(document).ready(function () {
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.data[0].apparentTemperatureMax);
-            console.log(data.daily.data[0].apparentTemperatureMin);
-            console.log(data.daily.summary);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -63,7 +63,7 @@ $(document).ready(function () {
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.icon);
+            // console.log(data.daily.icon);
             var icon = data.daily.icon
 
             var iconDiv = $("<div>");
@@ -119,8 +119,8 @@ $(document).ready(function () {
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data)
-            console.log(data.currently.apparentTemperature);
+            // console.log(data)
+            // console.log(data.currently.apparentTemperature);
 
             var destination = data.currently.apparentTemperature;
 
@@ -137,9 +137,9 @@ $(document).ready(function () {
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.data[0].apparentTemperatureMax);
-            console.log(data.daily.data[0].apparentTemperatureMin);
-            console.log(data.daily.summary);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -172,7 +172,7 @@ $(document).ready(function () {
     $.ajax({
         url: proxy + apiLinkDS,
         success: function (data) {
-            console.log(data.daily.icon);
+            // console.log(data.daily.icon);
             var icon = data.daily.icon
 
             var iconDiv = $("<div>");
