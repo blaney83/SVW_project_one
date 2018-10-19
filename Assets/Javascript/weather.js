@@ -5,11 +5,11 @@ $(document).ready(function () {
     //var longNlatCurrent = $("#longNLatVar")
     var longNlatCurrent = "33.303176,-111.839866"
     var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatCurrent;
+    var currapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatCurrent;
 
 
     $.ajax({
-        url: proxy + apiLinkDS,
+        url: proxy + currapiLinkDS,
         success: function (data) {
             // console.log(data)
             // console.log(data.currently.apparentTemperature);
@@ -101,11 +101,10 @@ $(document).ready(function () {
 
     // calling weather for destination
     var longNlatDestination = "36.106964,-112.112999"
-    var proxy = 'https://cors-anywhere.herokuapp.com/';
-    var apiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatDestination;
+    var destapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatDestination;
 
     $.ajax({
-        url: proxy + apiLinkDS,
+        url: proxy + destapiLinkDS,
         success: function (data) {
             // console.log(data)
             //console.log(data.currently.apparentTemperature);
