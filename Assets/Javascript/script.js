@@ -27,7 +27,6 @@ $(document).ready(function () {
             //add the display name after the user is done being created 
             firebase.auth().currentUser.updateProfile({ displayName: displayID });
         });
-
     };
 
     function signInFn() {
@@ -107,15 +106,12 @@ $(document).ready(function () {
     var name = "Oops, I did it again!";
 
         $("#savedDest1").on("click", function () {
-            console.log(name);
+            console.log(database.ref().childSnapshot.val().address);
         });
 
         //Saves information for new destination
         $("#dest-btn").on("click", function (event) {
             event.preventDefault();
-            // var countDestinations = 0;
-            
-            // countDestinations++;
             
             var destInput = $("#dest-input").val().trim();
             var destName = $("#dest-name").val().trim();
