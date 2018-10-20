@@ -120,24 +120,27 @@ $(document).ready(function () {
             var destInput = $("#dest-input").val().trim();
             var destName = $("#dest-name").val().trim();
             var newDest = {
-                name: destName,
-                address: destInput
+                "name": destName,
+                "address": destInput
             };
             
-            database.ref("/savedDestination:" + destName).push(newDest);
-            
+            database.ref().push(newDest);
             
         });
-    //     //Adds new destination button
-    //     database.ref().on("child_added", function (childSnapshot) {
-    //         console.log(childSnapshot.val());
 
-    //         var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+        
+        //Adds new destination button
+        database.ref().on("child_added", function(childSnapshot) {
+            console.log(childSnapshot.val().name);
+
+            var destName = childSnapshot.val().name
             
-    //         $("#new-destinations").append($newDest);
+            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
             
-    //         console.log($newDest);
+            $("#new-destinations").append($newDest);
             
-    //         $("form").trigger("reset");
-    // });
+            console.log($newDest);
+            
+            $("form").trigger("reset");
+    });
 });
