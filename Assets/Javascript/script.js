@@ -36,6 +36,7 @@ $(document).ready(function () {
     var currentPhysicalAddress;
     var destLatitude;
     var destLongitude;
+    var currentTime;
     // Create a DirectionsService object to use the route method and get a result for our request
     var directionsService = new google.maps.DirectionsService();
     //holds the newly initialized asynchronous geocoder call upon init()
@@ -114,7 +115,7 @@ $(document).ready(function () {
 
     //Display Current Time  
     function getTime() {
-        var currentTime = moment().format("hh:mm a");
+        currentTime = moment().format("hh:mm a");
         $("#time").text(currentTime);
     }
 
@@ -166,9 +167,13 @@ $(document).ready(function () {
         // Routing
         directionsService.route(request, function (result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
+                var intTravTime = (result.routes[0].legs[0].duration.value);
+                var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
+                
                 //Get distance and time amd display
-                $("#trip-info-target").append("Distance= " + result.routes[0].legs[0].distance.text + "<br> Duration: " + result.routes[0].legs[0].duration.text)
-                //display route
+                $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + result.routes[0].legs[0].distance.text + "<br> Duration: " + result.routes[0].legs[0].duration.text)
+                //display arrival time
+                $("#arrival-time-target").html("<h5>Arrival Time = </h5><br>" + arrivalTime)
             } else {
                 //Show error message           
                 alert("Can't find road! Please try again!");
