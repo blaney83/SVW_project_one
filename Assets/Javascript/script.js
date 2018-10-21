@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
 
     // Initialize Firebase
@@ -86,33 +87,6 @@ $(document).ready(function () {
 
     firebase.auth().onAuthStateChanged(authStateChangeListener);
 
-
-    // ? This is the firebase given popup for Google sign in function
-    // //Sign-In with Google Redirect page
-    // var provider = new firebase.auth.GoogleAuthProvider();
-    // provider.addScope("user");
-    // provider.addScope("email");
-    // provider.addScope("https://www.googleapis.com/auth/plus.me");
-
-    // firebase.auth().signInWithPopup(provider).then(function (result) {
-    //     // This gives you a Google Access Token. You can use it to access the Google API.
-    //     var token = result.credential.accessToken;
-    //     // The signed-in user info.
-    //     var user = result.user;
-
-    //     console.log("Function")
-    // }).catch(function (error) {
-    //     // Handle Errors here.
-    //     var errorCode = error.code;
-    //     var errorMessage = error.message;
-    //     // The email of the user's account used.
-    //     var email = error.email;
-    //     // The firebase.auth.AuthCredential type that was used.
-    //     var credential = error.credential;
-    //     console.log(error);
-    // });
-    // ? End the firebase given popup for Google sign in function
-
     //Display Current Time  
     function getTime() {
         var currentTime = moment().format("hh:mm a");
@@ -145,18 +119,121 @@ $(document).ready(function () {
 
     });
 
-    // //Adds new destination button
-    // return userPath.on("child_added", function (childSnapshot) {
-    //     console.log(childSnapshot.val().name);
+    //WORKING ON MAPS/DISTANCE MATRIX API VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
-    //     var destName = childSnapshot.val().name
+    //this is the Distance Matrix API Code
+    var currentLatitude;
+    var currentLongitude;
+    var currentPhysicalAddress;
+    var destLatitude;
+    var destLongitude;
+    // Create a DirectionsService object to use the route method and get a result for our request
+    var directionsService = new google.maps.DirectionsService();
+    //run Geo initialization outright
+    initGeoCode();
 
-    //     var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
 
-    //     $("#new-destinations").append($newDest);
+            currentLatitude = position.coords.latitude;
+            currentLongitude = position.coords.longitude;
 
-    //     console.log($newDest);
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
+            var geocoder = new google.maps.Geocoder();
+            //once everything is set and variables defined, then we run the reverse geocoding to get our current street address VVVVVVVVVVV
+            geocodeLatLng(geocoder);
+        }, function () {
+            //runs if they dont allow geo location
+            alert("please active your geolocation services!!! turd.")
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        alert("Your browser doesnt support Geolocation Services:(")
+    }
 
-    //     $("form").trigger("reset");
-    // });
+    // Define calcRoute function
+    function calcRoute() {
+        //create request
+        console.log(destLatitude)
+        var request = {
+            origin: { lat: currentLatitude, lng: currentLongitude },
+            // document.getElementById("location-1").value,
+            destination: { lat: destLatitude, lng: destLongitude },
+            // document.getElementById("location-2").value,
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC
+        }
+        console.log(request.destination)
+        // Routing
+        directionsService.route(request, function (result, status) {
+            console.log("listening")
+            if (status == google.maps.DirectionsStatus.OK) {
+                //Get distance and time amd display           
+                $("#trip-info-target").append("Distance= " + result.routes[0].legs[0].distance.text + "<br> Duration: " + result.routes[0].legs[0].duration.text)
+                console.log(result.routes[0].legs[0].distance.text)
+                console.log(result.routes[0].legs[0].duration.text)
+                //display route
+            } else {
+                //Show error message           
+                alert("Can't find road! Please try again!");
+            }
+        });
+    }
+
+    //holds the newly initialized asynchronous geocoder call upon init()
+    var destGeocoder;
+
+    function initGeoCode() {
+        destGeocoder = new google.maps.Geocoder();
+    }
+
+    function calculateAddressCoordinates() {
+        var address = $("#dest-input").val().trim();
+        destGeocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == 'OK') {
+                destCoordinates = results[0].geometry.location
+                destLatitude = destCoordinates.lat()
+                destLongitude = destCoordinates.lng()   
+            } else {
+                alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
+            }
+            //invoking the route calculation
+            calcRoute()
+        });
+    }
+
+    //unltimately has all of the other functionality chained to this event listener
+    $("#dest-btn").on("click", calculateAddressCoordinates)
+    //geocoding the user address ^^^^^^^^^^
+
+    //reverse geocoding the current coordinates to create a physical address for current location VVVVVVVVVVVVVVVVVVV
+    var destGeocoder = new google.maps.Geocoder();
+
+    function geocodeLatLng(geocoder) {
+
+        var latlng = { lat: parseFloat(currentLatitude), lng: parseFloat(currentLongitude) };
+        geocoder.geocode({ 'location': latlng }, function (results, status) {
+            if (status === 'OK') {
+                if (results[0]) {
+                    currentPhysicalAddress = results[0].formatted_address
+                    //display the coordinates and address where we are
+                    $("#GPS").text("lat: " + currentLatitude + " lng: " + currentLongitude + " address: " + currentPhysicalAddress);
+
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+        });
+    }
+    //reverse geocoding the current coordinates to create a physical address for current location ^^^^^^^^^^^^^^^^^^^^
+
+    //WORKING ON MAPS/DISTANCE MATRIX API ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 });
+
