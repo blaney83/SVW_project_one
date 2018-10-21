@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-    // Initialize Firebase
+     // Initialize Firebase section VVVVVVVVVVVVV
     var config = {
         apiKey: "AIzaSyBqTulegEmK-HXtVXBF1Cq_Z9OGasmKJoE",
         authDomain: "svw-project-one.firebaseapp.com",
@@ -10,16 +10,50 @@ $(document).ready(function () {
         storageBucket: "svw-project-one.appspot.com",
         messagingSenderId: "59061588756"
     };
-
+    
     firebase.initializeApp(config);
-
+    
     var database = firebase.database();
+    //END Initialize Firebase section ^^^^^^^^^^^^^
 
+    //************************** */
+    //VARIABLE DEFINITION SECTION
+    //************************** */
 
-    //? Sign-in or create account functions below
+    //db auth vars
+    var userUID;
+    var userPath;
+    //END auth vars
+
+    //input vars
+    var destName;
+    var destInput;
+    //END input vars
+
+    //mapping data vars
+    var currentLatitude;
+    var currentLongitude;
+    var currentPhysicalAddress;
+    var destLatitude;
+    var destLongitude;
+    // Create a DirectionsService object to use the route method and get a result for our request
+    var directionsService = new google.maps.DirectionsService();
+    //holds the newly initialized asynchronous geocoder call upon init()
+    var destGeocoder;
+    //END mapping data vars
+
+    //******************************* */
+    //END VARIABLE DEFINITION SECTION
+    //******************************* */
+
+    //******************************* */
+    // Sign-in/create account methods & functions VVVVVVVVVV
+    //******************************* */
+
+    //Creating an account
     function createAccount() {
         event.preventDefault();
-        console.log("wooo")
+
         var displayID = $("#userNameEntry").val().trim();
         var email = $("#emailEntry").val().trim();
         var password = $("#passwordEntry").val().trim();
@@ -28,20 +62,23 @@ $(document).ready(function () {
             //add the display name after the user is done being created 
             firebase.auth().currentUser.updateProfile({ displayName: displayID });
         });
-
     };
 
+    //Sign-in to account
     function signInFn() {
         event.preventDefault();
+
         var email = $("#emailLogin").val().trim();
         var password = $("#passwordLogin").val().trim();
 
         firebase.auth().signInWithEmailAndPassword(email, password);
     };
 
-
+    //This will auto-sign in.
     function authStateChangeListener(user) {
         var userID = firebase.auth().currentUser.displayName
+        userUID = firebase.auth().currentUser.uid
+        userPath = database.ref("users/" + userUID)
         //signin
         if (user) {
             //perform login operations
@@ -49,20 +86,31 @@ $(document).ready(function () {
             //change login visibility
             $(".signInPage").css({ "opacity": "0" })
             $(".signInPage").css({ "z-index": "0" })
-            // Chat.onlogin();
-            // Game.onlogin();
-            console.log("Welcome Back " + userID);
+
+            alert("Welcome Back " + userID);
         } else {
-            // signout
-            // window.location.reload();
+            signout
         };
+        //Calling exisitng saved destinations
+        return userPath.on("child_added", function (childSnapshot) {
+
+            destName = childSnapshot.val().name
+
+            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+
+            $("#new-destinations").append($newDest);
+
+            $("form").trigger("reset");
+        });
     };
+    //************************************ */
+    //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
+    //************************************ */
 
-    $(document).on("submit", "#signUp", createAccount)
 
-    $(document).on("submit", "#signIn", signInFn)
-
-    firebase.auth().onAuthStateChanged(authStateChangeListener);
+    //************************************ */
+    //Clock and Interval Functions & Methods VVVVVVV
+    //************************************ */
 
     //Display Current Time  
     function getTime() {
@@ -70,63 +118,17 @@ $(document).ready(function () {
         $("#time").text(currentTime);
     }
 
+    //Interval Definition
     function setTime() {
         setInterval(getTime, 1000);
     }
+    //************************************ */
+    //END Clock and Interval Functions & Methods ^^^^^^^^
+    //************************************ */
 
-    setTime();
-
-    //Currently set to show communication to firebase DB, will set to contain address, or coordinates of saved location.
-    var name = "Oops, I did it again!";
-
-    $("#savedDest1").on("click", function () {
-        console.log(name);
-    });
-
-    //Saves information for new destination
-    $("#dest-btn").on("click", function (event) {
-        event.preventDefault();
-        // var countDestinations = 0;
-
-        // countDestinations++;
-
-        var destInput = $("#dest-input").val().trim();
-        var destName = $("#dest-name").val().trim();
-        var newDest = {
-            name: destName,
-            address: destInput
-        };
-
-        database.ref("/savedDestination:" + destName).push(newDest);
-
-
-    });
-    //     //Adds new destination button
-    //     database.ref().on("child_added", function (childSnapshot) {
-    //         console.log(childSnapshot.val());
-
-    //         var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
-
-    //         $("#new-destinations").append($newDest);
-
-    //         console.log($newDest);
-
-    //         $("form").trigger("reset");
-    // });
-
-
-    //WORKING ON MAPS/DISTANCE MATRIX API VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-
-    //this is the Distance Matrix API Code
-    var currentLatitude;
-    var currentLongitude;
-    var currentPhysicalAddress;
-    var destLatitude;
-    var destLongitude;
-    // Create a DirectionsService object to use the route method and get a result for our request
-    var directionsService = new google.maps.DirectionsService();
-    //run Geo initialization outright
-    initGeoCode();
+    //************************************ */
+    //MAPS/DISTANCE Functions & Methods VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+    //************************************* */
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -153,7 +155,6 @@ $(document).ready(function () {
     // Define calcRoute function
     function calcRoute() {
         //create request
-        console.log(destLatitude)
         var request = {
             origin: { lat: currentLatitude, lng: currentLongitude },
             // document.getElementById("location-1").value,
@@ -162,15 +163,11 @@ $(document).ready(function () {
             travelMode: google.maps.TravelMode.DRIVING,
             unitSystem: google.maps.UnitSystem.METRIC
         }
-        console.log(request.destination)
         // Routing
         directionsService.route(request, function (result, status) {
-            console.log("listening")
             if (status == google.maps.DirectionsStatus.OK) {
-                //Get distance and time amd display           
+                //Get distance and time amd display
                 $("#trip-info-target").append("Distance= " + result.routes[0].legs[0].distance.text + "<br> Duration: " + result.routes[0].legs[0].duration.text)
-                console.log(result.routes[0].legs[0].distance.text)
-                console.log(result.routes[0].legs[0].duration.text)
                 //display route
             } else {
                 //Show error message           
@@ -179,20 +176,17 @@ $(document).ready(function () {
         });
     }
 
-    //holds the newly initialized asynchronous geocoder call upon init()
-    var destGeocoder;
-
     function initGeoCode() {
         destGeocoder = new google.maps.Geocoder();
     }
 
     function calculateAddressCoordinates() {
-        var address = $("#dest-input").val().trim();
-        destGeocoder.geocode({ 'address': address }, function (results, status) {
+        console.log("Listening")
+        destGeocoder.geocode({ 'address': destInput }, function (results, status) {
             if (status == 'OK') {
                 destCoordinates = results[0].geometry.location
                 destLatitude = destCoordinates.lat()
-                destLongitude = destCoordinates.lng()   
+                destLongitude = destCoordinates.lng()
             } else {
                 alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
             }
@@ -201,12 +195,7 @@ $(document).ready(function () {
         });
     }
 
-    //unltimately has all of the other functionality chained to this event listener
-    $("#dest-btn").on("click", calculateAddressCoordinates)
-    //geocoding the user address ^^^^^^^^^^
-
     //reverse geocoding the current coordinates to create a physical address for current location VVVVVVVVVVVVVVVVVVV
-    var destGeocoder = new google.maps.Geocoder();
 
     function geocodeLatLng(geocoder) {
 
@@ -226,10 +215,49 @@ $(document).ready(function () {
             }
         });
     }
-    //reverse geocoding the current coordinates to create a physical address for current location ^^^^^^^^^^^^^^^^^^^^
 
-    //WORKING ON MAPS/DISTANCE MATRIX API ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //************************************ */
+    //END MAPS/DISTANCE Functions & Methods ^^^^^^^^^^^^
+    //************************************ */
 
+    //************************************** */
+    //All Calls and invokations below this point VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+    //************************************** */
+
+    //Login/Account Invocation
+    $(document).on("submit", "#signUp", createAccount)
+    //Login/Account Invocation
+    $(document).on("submit", "#signIn", signInFn)
+    //Login/Account Invocation
+    firebase.auth().onAuthStateChanged(authStateChangeListener);
+
+    //sets time to run. will tie in all data calls to this to enable live refreshing
+    setTime();
+
+    //MAPS/GEO-run Geo initialization outright
+    initGeoCode();
+
+    //DATABASE/MAPS/GEO-Saves information for new destination
+    $("#dest-btn").on("click", function (event) {
+        event.preventDefault();
+        destInput = $("#dest-input").val().trim();
+        destName = $("#dest-name").val().trim();
+        var newDest = {
+            "name": destName,
+            "address": destInput
+        };
+        //Fn VV has all of the mapping API functions tied in
+        calculateAddressCoordinates();
+    });
+
+    //Will pull address from saved destination, and run to see desired time and weather.
+    $("#" + destName).on("click", function () {
+        console.log(database.ref().childSnapshot.val().address);
+    });
+
+    //**************************************** */
+    //END Calls and Invocations
+    //**************************************** */
 
 });
 

@@ -126,17 +126,21 @@ h5{
 
 /* weather styling */
 h6{
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900px;
 }
 #tempMax, #tempMin, #current{
-    font-size: 22px;
+    font-size: 20px;
 }
  #summary{
      font-size: 14px;
  }
+
+.weatherDiv{
+     text-align: center
+ }
 .icon{
-    max-width: 70px;
+    max-width: 100px;
     width: 100%;
     height: auto;
 }
@@ -150,12 +154,12 @@ h6{
     opacity: 1;
 }
 .icon-destination{
-    max-width: 70px;
+    max-width: 100px;
     width: 100%;
     height: auto;
 }
 #tempMaxDestination, #tempMinDestination, #destination{
-    font-size: 22px;
+    font-size: 20px;
 }
 #summaryDestination{
     font-size: 14px;
