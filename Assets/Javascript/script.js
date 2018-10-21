@@ -16,9 +16,13 @@ $(document).ready(function () {
 
 
     //? Sign-in or create account functions below
+
+    //Creating an account
     function createAccount() {
         event.preventDefault();
+
         console.log("wooo")
+
         var displayID = $("#userNameEntry").val().trim();
         var email = $("#emailEntry").val().trim();
         var password = $("#passwordEntry").val().trim();
@@ -29,17 +33,25 @@ $(document).ready(function () {
         });
     };
 
+    //Sign-in to account
     function signInFn() {
         event.preventDefault();
+
         var email = $("#emailLogin").val().trim();
         var password = $("#passwordLogin").val().trim();
 
         firebase.auth().signInWithEmailAndPassword(email, password);
     };
 
+    var userUID;
+    var userPath;
+    var destName;
 
+    //This will auto-sign in.
     function authStateChangeListener(user) {
         var userID = firebase.auth().currentUser.displayName
+        userUID = firebase.auth().currentUser.uid
+        userPath = database.ref("users/" + userUID)
         //signin
         if (user) {
             //perform login operations
@@ -47,13 +59,25 @@ $(document).ready(function () {
             //change login visibility
             $(".signInPage").css({ "opacity": "0" })
             $(".signInPage").css({ "z-index": "0" })
-            // Chat.onlogin();
-            // Game.onlogin();
+
             console.log("Welcome Back " + userID);
         } else {
-            // signout
-            // window.location.reload();
+            signout
         };
+        //Calling exisitng saved destinations
+        return userPath.on("child_added", function (childSnapshot) {
+            console.log(childSnapshot.val().name);
+    
+            destName = childSnapshot.val().name
+    
+            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+    
+            $("#new-destinations").append($newDest);
+    
+            console.log($newDest);
+    
+            $("form").trigger("reset");
+        });
     };
 
     $(document).on("submit", "#signUp", createAccount)
@@ -100,43 +124,39 @@ $(document).ready(function () {
     }
 
     setTime();
-
-    
-    //Currently set to show communication to firebase DB, will set to contain address, or coordinates of saved location.
-    var name = "Oops, I did it again!";
-
-        $("#savedDest1").on("click", function () {
-            console.log(database.ref().childSnapshot.val().address);
-        });
-
-        //Saves information for new destination
-        $("#dest-btn").on("click", function (event) {
-            event.preventDefault();
-            
-            var destInput = $("#dest-input").val().trim();
-            var destName = $("#dest-name").val().trim();
-            var newDest = {
-                "name": destName,
-                "address": destInput
-            };
-            
-            database.ref().push(newDest);
-            
-        });
-
-        
-        //Adds new destination button
-        database.ref().on("child_added", function(childSnapshot) {
-            console.log(childSnapshot.val().name);
-
-            var destName = childSnapshot.val().name
-            
-            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
-            
-            $("#new-destinations").append($newDest);
-            
-            console.log($newDest);
-            
-            $("form").trigger("reset");
+    console.log(destName);
+    //Will pull address from saved destination, and run to see desired time and weather.
+    $("#" + destName).on("click", function () {
+        console.log(database.ref().childSnapshot.val().address);
     });
+
+    //Saves information for new destination
+    $("#dest-btn").on("click", function (event) {
+        event.preventDefault();
+
+        var destInput = $("#dest-input").val().trim();
+        var destName = $("#dest-name").val().trim();
+        var newDest = {
+            "name": destName,
+            "address": destInput
+        };
+
+        userPath.push(newDest);
+
+    });
+
+    // //Adds new destination button
+    // return userPath.on("child_added", function (childSnapshot) {
+    //     console.log(childSnapshot.val().name);
+
+    //     var destName = childSnapshot.val().name
+
+    //     var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+
+    //     $("#new-destinations").append($newDest);
+
+    //     console.log($newDest);
+
+    //     $("form").trigger("reset");
+    // });
 });
