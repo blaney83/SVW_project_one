@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-     // Initialize Firebase section VVVVVVVVVVVVV
+    // Initialize Firebase section VVVVVVVVVVVVV
     var config = {
         apiKey: "AIzaSyBqTulegEmK-HXtVXBF1Cq_Z9OGasmKJoE",
         authDomain: "svw-project-one.firebaseapp.com",
@@ -10,9 +10,9 @@ $(document).ready(function () {
         storageBucket: "svw-project-one.appspot.com",
         messagingSenderId: "59061588756"
     };
-    
+
     firebase.initializeApp(config);
-    
+
     var database = firebase.database();
     //END Initialize Firebase section ^^^^^^^^^^^^^
 
@@ -37,6 +37,13 @@ $(document).ready(function () {
     var destLatitude;
     var destLongitude;
     var currentTime;
+    //in hours and minutes and am/pm
+    var shortArrivalTime;
+    //in seconds
+    var intTravTime;
+    //in hours and minutes
+    var parsTravTime;
+    var tripDist;
     // Create a DirectionsService object to use the route method and get a result for our request
     var directionsService = new google.maps.DirectionsService();
     //holds the newly initialized asynchronous geocoder call upon init()
@@ -94,15 +101,17 @@ $(document).ready(function () {
         };
         //Calling exisitng saved destinations
         return userPath.on("child_added", function (childSnapshot) {
-
+            console.log("listening")
             destName = childSnapshot.val().name
+            destAddress = childSnapshot.val().address
 
-            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
+            var $newDest = $("<button>").addClass("favButts").attr("id", destAddress).text(destName);
+
 
             $("#new-destinations").append($newDest);
 
             $("form").trigger("reset");
-        });
+        }).then( tableRefresh());
     };
     //************************************ */
     //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
@@ -115,13 +124,15 @@ $(document).ready(function () {
 
     //Display Current Time  
     function getTime() {
+        console.log("counting")
         currentTime = moment().format("hh:mm a");
         $("#time").text(currentTime);
+        tableRefresh();
     }
 
     //Interval Definition
     function setTime() {
-        setInterval(getTime, 1000);
+        setInterval(getTime, 60000);
     }
     //************************************ */
     //END Clock and Interval Functions & Methods ^^^^^^^^
@@ -154,7 +165,7 @@ $(document).ready(function () {
     }
 
     // Define calcRoute function
-    function calcRoute() {
+    function calcRoute(buttonAddress) {
         //create request
         var request = {
             origin: { lat: currentLatitude, lng: currentLongitude },
@@ -167,13 +178,17 @@ $(document).ready(function () {
         // Routing
         directionsService.route(request, function (result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-                var intTravTime = (result.routes[0].legs[0].duration.value);
+                intTravTime = (result.routes[0].legs[0].duration.value);
+                parsTravTime = (result.routes[0].legs[0].duration.text);
+                tripDist = result.routes[0].legs[0].distance.text;
                 var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
-                
+                shortArrivalTime = moment().add(intTravTime, "s").format("h:mm a");
+
                 //Get distance and time amd display
-                $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + result.routes[0].legs[0].distance.text + "<br> Duration: " + result.routes[0].legs[0].duration.text)
+                $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + tripDist + "<br> Duration: " + parsTravTime)
                 //display arrival time
                 $("#arrival-time-target").html("<h5>Arrival Time = </h5><br>" + arrivalTime)
+                tableContent(buttonAddress);
             } else {
                 //Show error message           
                 alert("Can't find road! Please try again!");
@@ -185,9 +200,11 @@ $(document).ready(function () {
         destGeocoder = new google.maps.Geocoder();
     }
 
-    function calculateAddressCoordinates() {
-        console.log("Listening")
-        destGeocoder.geocode({ 'address': destInput }, function (results, status) {
+    function calculateAddressCoordinates(buttonAddress) {
+        //shows user the destination currently selected
+        $("#destGPS").text(buttonAddress)
+
+        destGeocoder.geocode({ 'address': buttonAddress }, function (results, status) {
             if (status == 'OK') {
                 destCoordinates = results[0].geometry.location
                 destLatitude = destCoordinates.lat()
@@ -196,7 +213,7 @@ $(document).ready(function () {
                 alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
             }
             //invoking the route calculation
-            calcRoute()
+            calcRoute(buttonAddress)
         });
     }
 
@@ -204,7 +221,10 @@ $(document).ready(function () {
 
     function geocodeLatLng(geocoder) {
 
-        var latlng = { lat: parseFloat(currentLatitude), lng: parseFloat(currentLongitude) };
+        var latlng = {
+            lat: parseFloat(currentLatitude),
+            lng: parseFloat(currentLongitude)
+        };
         geocoder.geocode({ 'location': latlng }, function (results, status) {
             if (status === 'OK') {
                 if (results[0]) {
@@ -219,6 +239,34 @@ $(document).ready(function () {
                 window.alert('Geocoder failed due to: ' + status);
             }
         });
+    }
+
+    //Adding and updating the information in the table
+    function tableContent(buttonAddress) {
+
+        //add to table section
+        var $td = $('<tr><th scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
+
+        $("#tableInsertTarget").append($td)
+
+    }
+
+    //Refreshing tables
+    function tableRefresh() {
+        $("#tableInsertTarget").empty()
+        userPath.once("value")
+            .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+
+                    var childData = childSnapshot.val().address;
+
+                    calculateAddressCoordinates(childData);
+
+                });
+            });
+
+
+
     }
 
     //************************************ */
@@ -242,7 +290,7 @@ $(document).ready(function () {
     //MAPS/GEO-run Geo initialization outright
     initGeoCode();
 
-    //DATABASE/MAPS/GEO-Saves information for new destination
+    //DATABASE/MAPS/GEO-Saves information for new destination and adds it to DB, which in turn runs "child_added" function to add button
     $("#dest-btn").on("click", function (event) {
         event.preventDefault();
         destInput = $("#dest-input").val().trim();
@@ -251,13 +299,19 @@ $(document).ready(function () {
             "name": destName,
             "address": destInput
         };
+
+        userPath.push(newDest);
         //Fn VV has all of the mapping API functions tied in
-        calculateAddressCoordinates();
+        // calculateAddressCoordinates();
     });
 
     //Will pull address from saved destination, and run to see desired time and weather.
-    $("#" + destName).on("click", function () {
-        console.log(database.ref().childSnapshot.val().address);
+    $(document).on("click", ".favButts", function (event) {
+
+        //grabs the address stored in the id of the botton
+        var buttonAddress = event.target.id
+
+        calculateAddressCoordinates(buttonAddress);
     });
 
     //**************************************** */

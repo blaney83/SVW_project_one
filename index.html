@@ -63,7 +63,11 @@
                         <div>
                             <h5>Current Location: </h5>
                             <span class="location dispArea" id="GPS">
-                                Home (40.741895, -73.989308)
+                            </span>
+                        </div>
+                        <div>
+                            <h5>Destination: </h5>
+                            <span class="location dispArea" id="destGPS">
                             </span>
                         </div>
                         <div>
@@ -155,37 +159,10 @@
                                         <th scope="col">Destination</th>
                                         <th scope="col">Trip Length</th>
                                         <th scope="col">Arrival Time</th>
-                                        <th scope="col">Average Trip Time</th>
+                                        <th scope="col">Distance</th>
                                     </tr>
                                 </thead>
-                                <tbody class="tableSection">
-                                    <tr>
-                                        <th scope="row">
-                                            <!-- populate with the placeholder of the buttons -->
-                                            Home
-                                        </th>
-                                        <td>35 min 23 sec</td>
-                                        <td>4:33 PM</td>
-                                        <td>30 min 15 sec</td>
-                                    </tr>
-                                    <tr class="tableSection">
-                                        <th scope="row">
-                                            <!-- populate with the placeholder of the buttons -->
-                                            Work
-                                        </th>
-                                        <td>42 min 57 sec</td>
-                                        <td>4:47 PM</td>
-                                        <td>38 min 19 sec</td>
-                                    </tr>
-                                    <tr class="tableSection">
-                                        <th scope="row">
-                                            <!-- populate with the placeholder of the buttons -->
-                                            School
-                                        </th>
-                                        <td>12 min 09 sec</td>
-                                        <td>4:04 PM</td>
-                                        <td>12 min 03 sec</td>
-                                    </tr>
+                                <tbody class="tableSection" id="tableInsertTarget">
                                 </tbody>
                             </table>
                         </div>
