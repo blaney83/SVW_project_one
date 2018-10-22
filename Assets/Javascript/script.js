@@ -62,21 +62,20 @@ $(document).ready(function () {
             $(".signInPage").css({ "z-index": "0" })
 
             console.log("Welcome Back " + userID);
+
         } else {
             signout
         };
         //Calling exisitng saved destinations
         return userPath.on("child_added", function (childSnapshot) {
             console.log(childSnapshot.val().name);
-    
+
             destName = childSnapshot.val().name
-    
-            var $newDest = $("<button>").addClass("favButts").attr("id", destName).text(destName);
-    
+
+            var $newDest = $("<button>").addClass("favButts btns").attr("id", destName).text(destName);
+
             $("#new-destinations").append($newDest);
-    
-            console.log($newDest);
-    
+
             $("form").trigger("reset");
         });
     };
@@ -98,11 +97,23 @@ $(document).ready(function () {
     }
 
     setTime();
-    console.log(destName);
-    //Will pull address from saved destination, and run to see desired time and weather.
-    $("#" + destName).on("click", function () {
-        console.log(database.ref().childSnapshot.val().address);
-    });
+    //todo This is a work in progress to get saved buttons to access saved address.  Current issue is getting these buttons to run at all, due to the fact that the buttons are set up through an asychronus function, so when it comes time to run the .on("click", function) it doesn't read the buttons.  Will look into this tomorrow.  May possibly roll into Monday, because I have to work tomorrow.
+    // //Will pull address from saved destination, and run to see desired time and weather.
+    // $("#School").on("click", function () {
+    //     event.preventDefault();
+
+    //     console.log("test");
+    //     userID = firebase.auth().currentUser.displayName
+    //     userUID = firebase.auth().currentUser.uid
+    //     userPath = database.ref("users/" + userUID)
+
+    //     return userPath.on("child_added", function (childSnapshot) {
+    //         destAddy = childSnapshot.val().address
+
+    //         console.log(destAddy);
+
+    //     });
+    // });
 
     //Saves information for new destination
     $("#dest-btn").on("click", function (event) {
@@ -151,7 +162,7 @@ $(document).ready(function () {
         });
     } else {
         // Browser doesn't support Geolocation
-        alert("Your browser doesnt support Geolocation Services:(")
+        alert("Your browser doesnt support Geolocation Services :(")
     }
 
     // Define calcRoute function
@@ -188,6 +199,7 @@ $(document).ready(function () {
 
     function initGeoCode() {
         destGeocoder = new google.maps.Geocoder();
+        // console.log(navigator.geolocation)
     }
 
     function calculateAddressCoordinates() {
@@ -196,7 +208,7 @@ $(document).ready(function () {
             if (status == 'OK') {
                 destCoordinates = results[0].geometry.location
                 destLatitude = destCoordinates.lat()
-                destLongitude = destCoordinates.lng()   
+                destLongitude = destCoordinates.lng()
             } else {
                 alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
             }
@@ -227,13 +239,12 @@ $(document).ready(function () {
                 }
             } else {
                 window.alert('Geocoder failed due to: ' + status);
-            }
+            };
         });
-    }
+    };
     //reverse geocoding the current coordinates to create a physical address for current location ^^^^^^^^^^^^^^^^^^^^
 
     //WORKING ON MAPS/DISTANCE MATRIX API ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 
 });
 
