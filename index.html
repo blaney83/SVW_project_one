@@ -77,9 +77,12 @@
                     </div>
                     <div id="dest-search" class="col-sm-12 col-md-6">
                         <form class="form-inline my-2 my-lg-0">
-                            <input id="dest-name" class="form-control mr-sm-2" type="text" placeholder="Destination Name" aria-label="Destination">
-                            <input id="dest-input" class="form-control mr-sm-2" type="text" placeholder="Destination Address" aria-label="Destination">
-                            <button id="dest-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add Destination</button>
+                            <input id="dest-name" class="form-control mr-sm-2" type="text" placeholder="Destination Name"
+                                aria-label="Destination">
+                            <input id="dest-input" class="form-control mr-sm-2" type="text" placeholder="Destination Address"
+                                aria-label="Destination">
+                            <button id="dest-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add
+                                Destination</button>
                         </form>
                     </div>
                 </div>
@@ -100,51 +103,44 @@
                     </div>
                 </div>
                 <div class="row weatherDiv">
-                    <div class="col-6">
-                        <h5>Current locations's weather:
-                            <span class="weather"></span>
-                        </h5>
+                    <div class="col-sm-12 col-md-6 weathCont">
+                        <div class="row">
+                            <div class="col-12">Current Weather</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="currentIcon">IMG</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="currentTemp">Current Temp</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="tempMax">High Temp</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="tempMin">Low Temp</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="summary">Forecast</div>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <h5>Destination's weather:
-                            <span class=weatherDestination></span>
-                        </h5>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="container weatherDiv">
-                        <div class="weatherDisplayArea table-responsive-md">
-                            <div class="row">
-                                <div class="col-6"><span class="icon-weather"></span></div>
-                                <div class="col-6"><span class="icon-destination"></span></div>
-                                <div class="col-6">
-                                    <h6>Current Degrees: <span id="current">°F </span></h6>
-
-                                </div>
-                                <div class="col-6">
-                                    <h6>Destination's Degrees: <span id="destination">°F</span> </h6>
-                                </div>
-                                <div class="col-6">
-                                    <h6>Temperature High: <span id="tempMax">°F </span>
-                                    </h6>
-                                </div>
-                                <div class="col-6">
-                                    <h6>Temperature High: <span id="tempMaxDestination">°F</span></h6>
-                                </div>
-                                <div class="col-6">
-                                    <h6>Temperature Low: <span id="tempMin">°F </span></h6>
-                                </div>
-                                <div class="col-6">
-                                    <h6>Temperature Low: <span id="tempMinDestination">°F</span></h6>
-                                </div>
-                                <div class="col-6">
-                                    <h6>Weather Description: </h6> <span id="summary"></span>
-                                </div>
-                                <div class="col-6">
-                                    <h6>Weather Description: </h6><span id="summaryDestination"></span>
-                                </div>
-                            </div>
+                    <div class="col-sm-12 col-md-6 weathCont">
+                        <div class="row">
+                            <div class="col-12">Destination Weather</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="DestIcon">IMG</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="DestCurrTemp">Current Temp</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="DestHighTemp">High Temp</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="DestLowTemp">Low Temp</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="summaryDestination">Forecast</div>
                         </div>
                     </div>
                 </div>
@@ -168,29 +164,29 @@
                         </div>
                     </div>
 
-    <!-- JQuery Library -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
-    <!-- Google API -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <!-- Moment CDN -->
-    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
-    <!-- AJAX JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-     <!-- Do we need this called out as a script tag? -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm67gwaaHPjy9Qdi2s4ge9ZT-6c02U2Sw"></script>
-    <!-- &libraries=places -->
-    <!--maps api-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--distance matrix api-->
-    <script src="Assets/Javascript/script.js"></script>
-    <script src="Assets/Javascript/weather.js"></script>
+                    <!-- JQuery Library -->
+                    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                        crossorigin="anonymous"></script>
+                    <!-- Firebase -->
+                    <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
+                    <!-- Google API -->
+                    <script src="https://apis.google.com/js/platform.js" async defer></script>
+                    <!-- Moment CDN -->
+                    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+                    <!-- AJAX JavaScript -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                        crossorigin="anonymous"></script>
+                    <!-- Bootstrap JavaScript -->
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+                        crossorigin="anonymous"></script>
+                    <!-- Do we need this called out as a script tag? -->
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm67gwaaHPjy9Qdi2s4ge9ZT-6c02U2Sw"></script>
+                    <!-- &libraries=places -->
+                    <!--maps api-->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <!--distance matrix api-->
+                    <script src="Assets/Javascript/script.js"></script>
+                    <script src="Assets/Javascript/weather.js"></script>
 </body>
 
 </html>
