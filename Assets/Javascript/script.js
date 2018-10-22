@@ -114,7 +114,7 @@ $(document).ready(function () {
         }).then(
             //important to get the table and clock to generate upon page load, but after the responses return
             getTime()
-            );
+        );
     };
     //************************************ */
     //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
@@ -237,6 +237,7 @@ $(document).ready(function () {
                 //display arrival time
                 $("#arrival-time-target").html("<h5>Arrival Time = </h5><br>" + arrivalTime)
                 tableContent(buttonAddress);
+                findWeather();
             } else {
                 //Show error message           
                 alert("Can't find road! Please try again!");
@@ -297,7 +298,7 @@ $(document).ready(function () {
         var $td = $('<tr><th scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
 
         //prevents duplicate table rows being created
-        if($(".favButts").length >= $("tr").length){
+        if ($(".favButts").length >= $("tr").length) {
             $("#tableInsertTarget").append($td)
         }
     }
@@ -319,6 +320,136 @@ $(document).ready(function () {
     //************************************ */
     //END MAPS/DISTANCE Functions & Methods ^^^^^^^^^^^^
     //************************************ */
+
+    //************************************ */
+    //Weather Functions and Methods VVVVVVVVVV
+    //************************************* */
+
+    //ajax calling current weather data for current location
+
+
+    //var longNlatCurrent = $("#longNLatVar")
+    // var longNlatCurrent = "33.303176,-111.839866"
+
+
+    function findWeather() {
+
+        var darkSkyCurrLat = currentLatitude.toFixed(4);
+        var darkSkyCurrLng = currentLongitude.toFixed(4);
+
+        var proxy = 'https://cors-anywhere.herokuapp.com/'
+        // var proxy = 'https://git.heroku.com/fast-thicket-34943.git/';
+        var currapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + darkSkyCurrLat + "," + darkSkyCurrLng;
+
+        $.ajax({
+            url: proxy + currapiLinkDS,
+            // method: "GET",
+            success: function (data) {
+
+                //VARS
+                var current = data.currently.apparentTemperature;
+                var tempMax = data.daily.data[0].apparentTemperatureMax;
+                var tempMin = data.daily.data[0].apparentTemperatureMin;
+                var summary = data.daily.summary;
+                var icon = data.daily.icon;
+
+                //jQuery Elements
+                $("#currentTemp").html("Current Temp: <br>" + current);
+                $("#tempMax").html("High Temp: <br>" + tempMax);
+                $("#tempMin").html("Low Temp: <br>" + tempMin);
+                $("#summary").html("Forecast: <br>" + summary);
+                $("#currentIcon").html(icon);
+
+                //Icon Logic
+                if (icon === "clear-day" || icon === "clear-night") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/sunny-icon.jpg" />');
+                }
+                if (icon === "rain") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/rain-icon.jpg" />');
+                }
+                if (icon === "cloudy" || icon === "partly-cloudy-night" || icon === "partly-cloudy-day") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/cloudy-icon.png" />');
+                }
+                if (icon === "sleet") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/sleet-icon.png" />');
+                }
+                if (icon === "wind") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/wind-icon.png" />');
+                }
+                if (icon === "fog") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/fog-icon.png" />');
+                }
+                if (icon === "hail") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/hail-icon.png" />');
+                }
+                if (icon === "thunderstorm") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/thunderstorm-icon.png" />');
+                }
+                if (icon === "tornado") {
+                    $('#currentIcon').html('<img class="icon" src="Assets/images/weather-icons/tornado-icon.png" />');
+                }
+            }
+        });
+
+        // calling weather for destination
+        var destapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + destLatitude + "," + destLongitude;
+
+        $.ajax({
+            url: proxy + destapiLinkDS,
+            success: function (data) {
+
+                //VARS
+                var destination = data.currently.apparentTemperature;
+                var tempMax = data.daily.data[0].apparentTemperatureMax;
+                var tempMin = data.daily.data[0].apparentTemperatureMin;
+                var summary = data.daily.summary;
+                var icon = data.daily.icon
+
+                //jQuery Elements
+                $("#DestCurrTemp").html("Current Temp: <br>" + destination);
+                $("#DestHighTemp").html("High Temp: <br>" + tempMax);
+                $("#DestLowTemp").html("Low Temp: <br>" + tempMin);
+                $("#summaryDestination").html("Forecast: <br>" + summary);
+                // $("#DestIcon").text(icon);
+
+                //Icon Logic
+                if (icon === "clear-day" || icon === "clear-night") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/sunny-icon.jpg" />');
+                }
+                if (icon === "rain") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/rain-icon.jpg" />');
+                }
+                if (icon === "cloudy" || icon === "partly-cloudy-night" || icon === "partly-cloudy-day") {
+                    $('#DestIcon').html('<img class="icon" src="Assets/images/weather-icons/cloudy-icon.png" />');
+                }
+                if (icon === "sleet") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/sleet-icon.png" />');
+                }
+                if (icon === "wind") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/wind-icon.png" />');
+                }
+                if (icon === "fog") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/fog-icon.png" />');
+                }
+                if (icon === "hail") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/hail-icon.png" />');
+                }
+                if (icon === "thunderstorm") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/thunderstorm-icon.png" />');
+                }
+                if (icon === "tornado") {
+                    $('#DestIcon').html('<img class="icon-destination" src="Assets/images/weather-icons/tornado-icon.png" />');
+                }
+            }
+        });
+    }
+
+
+
+
+    //************************************ */
+    //END Weather Functions and Methods ^^^^^^^^^^^
+    //************************************* */
 
     //************************************** */
     //All Calls and invokations below this point VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
