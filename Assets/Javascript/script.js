@@ -264,7 +264,7 @@ $(document).ready(function () {
             //invoking the route calculation
             calcRoute(buttonAddress)
         });
-    }
+    };
 
     //reverse geocoding the current coordinates to create a physical address for current location VVVVVVVVVVVVVVVVVVV
 
