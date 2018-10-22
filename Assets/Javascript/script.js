@@ -111,7 +111,10 @@ $(document).ready(function () {
             $("#new-destinations").append($newDest);
 
             $("form").trigger("reset");
-        }).then( tableRefresh());
+        }).then(
+            //important to get the table and clock to generate upon page load, but after the responses return
+            getTime()
+            );
     };
     //************************************ */
     //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
@@ -127,6 +130,7 @@ $(document).ready(function () {
         console.log("counting")
         currentTime = moment().format("hh:mm a");
         $("#time").text(currentTime);
+        console.log(currentTime)
         tableRefresh();
     }
 
