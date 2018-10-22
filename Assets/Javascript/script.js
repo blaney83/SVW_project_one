@@ -247,8 +247,10 @@ $(document).ready(function () {
         //add to table section
         var $td = $('<tr><th scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
 
-        $("#tableInsertTarget").append($td)
-
+        //prevents duplicate table rows being created
+        if($(".favButts").length >= $("tr").length){
+            $("#tableInsertTarget").append($td)
+        }
     }
 
     //Refreshing tables
@@ -261,12 +263,8 @@ $(document).ready(function () {
                     var childData = childSnapshot.val().address;
 
                     calculateAddressCoordinates(childData);
-
                 });
             });
-
-
-
     }
 
     //************************************ */
@@ -310,9 +308,10 @@ $(document).ready(function () {
 
         //grabs the address stored in the id of the botton
         var buttonAddress = event.target.id
-
+        // tableRefresh();
         calculateAddressCoordinates(buttonAddress);
-    });
+
+    })
 
     //**************************************** */
     //END Calls and Invocations
