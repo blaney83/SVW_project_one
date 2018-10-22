@@ -301,18 +301,13 @@ $(document).ready(function () {
             "name": destName,
             "address": destInput
         };
-
         userPath.push(newDest);
-        //Fn VV has all of the mapping API functions tied in
-        // calculateAddressCoordinates();
     });
 
     //Will pull address from saved destination, and run to see desired time and weather.
     $(document).on("click", ".favButts", function (event) {
-
         //grabs the address stored in the id of the botton
         var buttonAddress = event.target.id
-        // tableRefresh();
         calculateAddressCoordinates(buttonAddress);
 
     })
