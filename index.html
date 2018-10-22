@@ -66,7 +66,7 @@
                             </span>
                         </div>
                         <div>
-                            <h5>Destination: </h5>
+                            <h5>Current Destination: </h5>
                             <span class="location dispArea" id="destGPS">
                             </span>
                         </div>
@@ -86,7 +86,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="row infoRow">
+                <!-- * Remove seperate trip length and trip time. -->
+                <!-- <div class="row infoRow">
                     <div class="col-sm-12 col-md-6 timeDiv">
                         <div class="row">
                             <div class="col-sm-6" id="trip-info-target">
@@ -101,21 +102,42 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row weatherDiv">
-                    <div class="col-6">
-                        <h5>Current locations's weather:
-                            <span class="weather"></span>
-                        </h5>
+                </div> -->
+                
+                <div class="row favRow justify-content-center">
+                    <div id="new-destinations" class="col-12 favoriteButtons">
                     </div>
-                    <div class="col-6">
-                        <h5>Destination's weather:
-                            <span class=weatherDestination></span>
-                        </h5>
+                    <div class="row tableRow">
+                        <div class="col-12 tableColumn">
+                            <table class="table table-responsive-md">
+                                <thead class="tableSection">
+                                    <tr>
+                                        <th scope="col">Destination</th>
+                                        <th scope="col">Trip Length</th>
+                                        <th scope="col">Arrival Time</th>
+                                        <th scope="col">Distance</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tableSection" id="tableInsertTarget">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-12">
+                    
+                    <div class="col-12">
+                        <div class="row weatherDiv">
+                            <div class="col-6">
+                                <h5>Current locations's weather:
+                                    <span class="weather"></span>
+                                </h5>
+                            </div>
+                            <div class="col-6">
+                                <h5>Destination's weather:
+                                    <span class=weatherDestination></span>
+                                </h5>
+                            </div>
+                        </div>
                     <div class="container weatherDiv">
                         <div class="weatherDisplayArea table-responsive-md">
                             <div class="row">
@@ -123,7 +145,7 @@
                                 <div class="col-6"><span class="icon-destination"></span></div>
                                 <div class="col-6">
                                     <h6>Current Degrees: <span id="current">°F </span></h6>
-
+                                    
                                 </div>
                                 <div class="col-6">
                                     <h6>Destination's Degrees: <span id="destination">°F</span> </h6>
@@ -151,25 +173,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row favRow justify-content-center">
-                    <div id="new-destinations" class="col-12 favoriteButtons">
-                    </div>
-                    <div class="row tableRow">
-                        <div class="col-12 tableColumn">
-                            <table class="table table-responsive-md">
-                                <thead class="tableSection">
-                                    <tr>
-                                        <th scope="col">Destination</th>
-                                        <th scope="col">Trip Length</th>
-                                        <th scope="col">Arrival Time</th>
-                                        <th scope="col">Distance</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tableSection" id="tableInsertTarget">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
 
                     <!-- JQuery Library -->
                     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -195,5 +198,4 @@
                     <script src="Assets/Javascript/script.js"></script>
                     <script src="Assets/Javascript/weather.js"></script>
 </body>
-
 </html>

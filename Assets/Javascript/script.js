@@ -127,17 +127,15 @@ $(document).ready(function () {
 
     //Display Current Time  
     function getTime() {
-        console.log("counting")
         currentTime = moment().format("hh:mm a");
         $("#time").text(currentTime);
-        console.log(currentTime)
         tableRefresh();
-    }
+    };
 
     //Interval Definition
     function setTime() {
         setInterval(getTime, 60000);
-    }
+    };
     //************************************ */
     //END Clock and Interval Functions & Methods ^^^^^^^^
     //************************************ */
@@ -223,7 +221,7 @@ $(document).ready(function () {
             destination: { lat: destLatitude, lng: destLongitude },
             // document.getElementById("location-2").value,
             travelMode: google.maps.TravelMode.DRIVING,
-            unitSystem: google.maps.UnitSystem.METRIC
+            unitSystem: google.maps.UnitSystem.IMPERIAL
         }
         // Routing
         directionsService.route(request, function (result, status) {
@@ -233,7 +231,7 @@ $(document).ready(function () {
                 tripDist = result.routes[0].legs[0].distance.text;
                 var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
                 shortArrivalTime = moment().add(intTravTime, "s").format("h:mm a");
-
+                
                 //Get distance and time amd display
                 $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + tripDist + "<br> Duration: " + parsTravTime)
                 //display arrival time
@@ -281,7 +279,7 @@ $(document).ready(function () {
                 if (results[0]) {
                     currentPhysicalAddress = results[0].formatted_address
                     //display the coordinates and address where we are
-                    $("#GPS").text("lat: " + currentLatitude + " lng: " + currentLongitude + " address: " + currentPhysicalAddress);
+                    $("#GPS").text(currentPhysicalAddress);
 
                 } else {
                     window.alert('No results found');
