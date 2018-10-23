@@ -104,11 +104,11 @@ $(document).ready(function () {
         //Calling exisitng saved destinations
         return userPath.on("child_added", function (childSnapshot) {
             console.log("listening")
+            destKey = childSnapshot.key
             destName = childSnapshot.val().name
             destAddress = childSnapshot.val().address
-            
-            var $newDest = $("<button>").addClass("favButts").attr("id", destAddress).text(destName);
-            
+
+            var $newDest = $("<button class='favButts' id='" + destAddress + "'>" + destName + " <img src='Assets/Images/baseline_remove_circle_outline_white_18dp.png' class='removeDestination' id='" + destKey + "'></button>")
 
             $("#new-destinations").append($newDest);
             
@@ -118,6 +118,16 @@ $(document).ready(function () {
             getTime()
             );
     };
+
+    //remove saved destination
+    function removeSavedDest(target){
+        destinationDBLocation = target.target.id
+        database.ref("users/" + userUID + "/" + destinationDBLocation).remove();
+        $(target.target.parentElement).remove()
+        tableRefresh();
+        $("#destGPS").text("")
+        
+    }
     //************************************ */
     //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
     //************************************ */
@@ -189,7 +199,6 @@ $(document).ready(function () {
                 tripDist = result.routes[0].legs[0].distance.text;
                 var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
                 shortArrivalTime = moment().add(intTravTime, "s").format("h:mm a");
-
                 tableContent(buttonAddress);
                 findWeather();
             } else {
@@ -205,7 +214,7 @@ $(document).ready(function () {
 
     function calculateAddressCoordinates(buttonAddress) {
         //shows user the destination currently selected
-        $("#destGPS").text(buttonAddress)
+        $("#destGPS").html(buttonAddress + '<a id="destMap" clas="btn btn-outline-success" href="" target="_blank"><i class="fas fa-map-marked" aria-hidden="true"></i></a>')
 
         destGeocoder.geocode({ 'address': buttonAddress }, function (results, status) {
             if (status == 'OK') {
@@ -222,7 +231,6 @@ $(document).ready(function () {
     };
 
     //reverse geocoding the current coordinates to create a physical address for current location VVVVVVVVVVVVVVVVVVV
-
     function geocodeLatLng(geocoder) {
 
         var latlng = {
@@ -235,7 +243,7 @@ $(document).ready(function () {
                     currentPhysicalAddress = results[0].formatted_address
                     //display the coordinates and address where we are
                     $("#GPS").text(currentPhysicalAddress);
-
+                    
                 } else {
                     window.alert('No results found');
                 }
@@ -299,6 +307,9 @@ $(document).ready(function () {
         var darkSkyCurrLat = currentLatitude.toFixed(4);
         var darkSkyCurrLng = currentLongitude.toFixed(4);
 
+        var darkSkyDestLat = destLatitude.toFixed(4);
+        var darkSkyDestLng = destLongitude.toFixed(4);
+
         var proxy = 'https://cors-anywhere.herokuapp.com/'
         var currapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + darkSkyCurrLat + "," + darkSkyCurrLng;
 
@@ -353,7 +364,7 @@ $(document).ready(function () {
         });
 
         // calling weather for destination
-        var destapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + destLatitude + "," + destLongitude;
+        var destapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + darkSkyDestLat + "," + darkSkyDestLng;
 
         $.ajax({
             url: proxy + destapiLinkDS,
@@ -448,6 +459,9 @@ $(document).ready(function () {
         };
         userPath.push(newDest);
     });
+
+    //DATABASE/MAPS- remove destination
+    $(document).on("click", ".removeDestination", removeSavedDest)
 
     //Will pull address from saved destination, and run to see desired time and weather.
     $(document).on("click", ".favButts", function (event) {
