@@ -97,7 +97,10 @@ $(document).ready(function () {
 
             alert("Welcome Back " + userID);
         } else {
-            signout
+            // //perform login operations
+            // event.preventDefault();
+            // //Sign-Out
+            // signOut();
         };
         //Calling exisitng saved destinations
         return userPath.on("child_added", function (childSnapshot) {
@@ -406,6 +409,18 @@ $(document).ready(function () {
     $(document).on("submit", "#signIn", signInFn)
     //Login/Account Invocation
     firebase.auth().onAuthStateChanged(authStateChangeListener);
+    //Sign-Out Invocation
+    $("#sign-out").on("click", function() {
+        //Sign-Out Function
+            console.log("Click");
+            firebase.auth().signOut()
+            .then(function () {
+                console.log("Sign-out successful");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
 
     //sets time to run. will tie in all data calls to this to enable live refreshing
     setTime();
