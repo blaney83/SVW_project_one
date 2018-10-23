@@ -1,13 +1,24 @@
+html{
+    z-index: 0;
+} 
 
 body{
-    background-color: rgb(24, 46, 24);
+    background-image: url(../Images/background.png);
+    background-size: cover;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
+    height: 100%
 }
 
 h5{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#current-items{
+    width: 45%;
+    margin: 2.5%;
+    box-shadow: 4px 4px 0 1px rgba(134, 134, 134, 0.322);
 }
 
 #loginScreen{
@@ -31,10 +42,6 @@ h5{
     margin-bottom: 10px;
 }
 
-#dest-search{
-    padding-top: 15px;
-}
-
 #dest-name, #dest-input{
     margin-bottom: 10px;
 }
@@ -42,13 +49,17 @@ h5{
 .row{
     margin-top: .4rem;
     margin-bottom: .4rem;
+    text-align: center;
 }
 
-.bg-light{
+.navbar-light .navbar-brand{
+    color: white;
+}
+
+.bg-dark{
     padding: .7rem;
     font-weight: bold;
-    background-color: rgba(106, 161, 106, 0.877) !important;
-    box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 0.486);
 }
 
 .mainContainer {
@@ -59,13 +70,14 @@ h5{
     border-style: solid;
     border-width: 2px;
     border-radius: .5rem;
-    padding: 2rem 1rem;
-    background-color: rgb(25, 83, 83);
+    /* padding: 2.5%; */
+    background-color: rgba(49, 49, 49, 0.582);
+    box-shadow: inset 0px 0px 30px 30px rgba(0, 92, 92, 0.514);
     color: white;
 }
 
 .dispArea {
-    background-color: darkcyan;
+    background-color: rgba(0, 92, 92, 0.801);
     width: auto;
     padding: .2rem .5rem;
     border: white;
@@ -79,7 +91,7 @@ h5{
     display: flex;
     flex-direction: row;
     /* overflow: hidden; */
-    background-color: darkcyan;
+    background-color: rgb(0, 92, 92, 0.801);
     border: white;
     border-style: solid;
     border-width: 1.5px;
@@ -87,17 +99,17 @@ h5{
 }
 
 .table{
-    background-color: darkcyan;
+    background-color: rgb(0, 92, 92, 0.801);
+    box-shadow: 4px 4px 0 1px rgba(134, 134, 134, 0.322);
     padding: .2rem .5rem;
+    text-align: center;
     border: white;
     border-width: 1px;
     border-style: solid;
     border-radius: .3rem;
 }
 
-.tableSection{
-    background-color: darkcyan;
-}
+
 
 .imgCont{
     display: flex;
@@ -124,19 +136,29 @@ h5{
     border-radius: 5px;
 }
 
+h1{
+    color: white;
+}
+
 /* weather styling */
 h6{
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900px;
 }
 #tempMax, #tempMin, #current{
-    font-size: 22px;
+    font-size: 20px;
 }
  #summary{
      font-size: 14px;
  }
+
+.weatherDiv{
+     text-align: center;
+     width: 100%;
+     margin: 2.5%;
+ }
 .icon{
-    max-width: 70px;
+    max-width: 100px;
     width: 100%;
     height: auto;
 }
@@ -145,19 +167,68 @@ h6{
     top: 0px;
     width: 100%;
     height: 100%;
-    background-color: coral;
+    background-color: rgb(0, 92, 92);
     z-index: 4; 
     opacity: 1;
 }
 .icon-destination{
-    max-width: 70px;
+    max-width: 100px;
     width: 100%;
     height: auto;
 }
+
+.weathCont {
+    background-color: rgb(0, 92, 92, 0.801);
+    box-shadow: 4px 4px 0 1px rgba(134, 134, 134, 0.322);
+    width: 100%;
+    /* margin: 2.5%; */
+    border: white;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: .5rem;
+    margin-bottom: .7rem;
+    
+}
+
 #tempMaxDestination, #tempMinDestination, #destination{
-    font-size: 22px;
+    font-size: 20px;
 }
 #summaryDestination{
     font-size: 14px;
 }    
 /* end of weather styling */
+
+
+#particles-js{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+
+@media (min-width: 576px){
+.col-sm-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 95%;
+}
+
+.weatherDiv{
+    text-align: center;
+    width: 95%;
+    margin: 2.5%;
+}
+}
+
+@media (min-width: 768px){
+    #current-items{
+        width: 95%;
+        margin: 2.5%
+    }
+
+    .weatherDiv{
+        text-align: center;
+        width: 100%;
+        margin: 2.5%;
+    }
+}

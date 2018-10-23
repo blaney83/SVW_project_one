@@ -13,6 +13,9 @@ $(document).ready(function () {
         success: function (data) {
             // console.log(data)
             // console.log(data.currently.apparentTemperature);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var current = data.currently.apparentTemperature;
 
@@ -21,6 +24,7 @@ $(document).ready(function () {
             currentDiv.attr("src", current);
 
             $("#current").prepend(current);
+
 
             var tempMax = data.daily.data[0].apparentTemperatureMax;
 
@@ -92,7 +96,9 @@ $(document).ready(function () {
             }
 
         }
-    })
+    });
+
+
     // calling weather for destination
     var longNlatDestination = "36.106964,-112.112999"
     var destapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + longNlatDestination;
@@ -101,7 +107,11 @@ $(document).ready(function () {
         url: proxy + destapiLinkDS,
         success: function (data) {
             // console.log(data)
-            // console.log(data.currently.apparentTemperature);
+            //console.log(data.currently.apparentTemperature);
+            // console.log(data.daily.data[0].apparentTemperatureMax);
+            // console.log(data.daily.icon);
+            // console.log(data.daily.data[0].apparentTemperatureMin);
+            // console.log(data.daily.summary);
 
             var destination = data.currently.apparentTemperature;
 
@@ -181,5 +191,6 @@ $(document).ready(function () {
             }
 
         }
-    })
+    });
+
 });  
