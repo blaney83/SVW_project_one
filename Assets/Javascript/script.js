@@ -217,6 +217,7 @@ $(document).ready(function () {
                 destCoordinates = results[0].geometry.location
                 destLatitude = destCoordinates.lat()
                 destLongitude = destCoordinates.lng()
+                $("#destMap").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+destLatitude+"+"+destLongitude);
             } else {
                 alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
             }
@@ -444,6 +445,7 @@ $(document).ready(function () {
         //grabs the address stored in the id of the botton
         var buttonAddress = event.target.id
         calculateAddressCoordinates(buttonAddress);
+
     })
 
     //**************************************** */
@@ -451,4 +453,3 @@ $(document).ready(function () {
     //**************************************** */
 
 });
-
