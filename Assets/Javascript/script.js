@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     // Initialize Firebase section VVVVVVVVVVVVV
@@ -94,28 +93,41 @@ $(document).ready(function () {
             //change login visibility
             $(".signInPage").css({ "opacity": "0" })
             $(".signInPage").css({ "z-index": "0" })
-
+            
             alert("Welcome Back " + userID);
         } else {
-            signout
+            // //perform login operations
+            // event.preventDefault();
+            // //Sign-Out
+            // signOut();
         };
         //Calling exisitng saved destinations
         return userPath.on("child_added", function (childSnapshot) {
             console.log("listening")
+            destKey = childSnapshot.key
             destName = childSnapshot.val().name
             destAddress = childSnapshot.val().address
 
-            var $newDest = $("<button>").addClass("favButts").attr("id", destAddress).text(destName);
-
+            var $newDest = $("<button class='favButts' id='" + destAddress + "'>" + destName + " <img src='Assets/Images/baseline_remove_circle_outline_white_18dp.png' class='removeDestination' id='" + destKey + "'></button>")
 
             $("#new-destinations").append($newDest);
-
+            
             $("form").trigger("reset");
         }).then(
             //important to get the table and clock to generate upon page load, but after the responses return
             getTime()
-        );
+            );
     };
+
+    //remove saved destination
+    function removeSavedDest(target){
+        destinationDBLocation = target.target.id
+        database.ref("users/" + userUID + "/" + destinationDBLocation).remove();
+        $(target.target.parentElement).remove()
+        tableRefresh();
+        $("#destGPS").text("")
+        
+    }
     //************************************ */
     //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
     //************************************ */
@@ -170,7 +182,7 @@ $(document).ready(function () {
 
     // Define calcRoute function
     function calcRoute(buttonAddress) {
-        //create request
+        //create request 
         var request = {
             origin: { lat: currentLatitude, lng: currentLongitude },
             // document.getElementById("location-1").value,
@@ -187,11 +199,6 @@ $(document).ready(function () {
                 tripDist = result.routes[0].legs[0].distance.text;
                 var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
                 shortArrivalTime = moment().add(intTravTime, "s").format("h:mm a");
-
-                //Get distance and time amd display
-                $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + tripDist + "<br> Duration: " + parsTravTime)
-                //display arrival time
-                $("#arrival-time-target").html("<h5>Arrival Time = </h5><br>" + arrivalTime)
                 tableContent(buttonAddress);
                 findWeather();
             } else {
@@ -207,23 +214,23 @@ $(document).ready(function () {
 
     function calculateAddressCoordinates(buttonAddress) {
         //shows user the destination currently selected
-        $("#destGPS").text(buttonAddress)
+        $("#destGPS").html(buttonAddress + '<a id="destMap" clas="btn btn-outline-success" href="" target="_blank"><i class="fas fa-map-marked" aria-hidden="true"></i></a>')
 
         destGeocoder.geocode({ 'address': buttonAddress }, function (results, status) {
             if (status == 'OK') {
                 destCoordinates = results[0].geometry.location
                 destLatitude = destCoordinates.lat()
                 destLongitude = destCoordinates.lng()
+                $("#destMap").attr("href", "https://www.google.com/maps/dir/?api=1&destination=" + destLatitude + "+" + destLongitude);
             } else {
                 alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
             }
             //invoking the route calculation
             calcRoute(buttonAddress)
         });
-    }
+    };
 
     //reverse geocoding the current coordinates to create a physical address for current location VVVVVVVVVVVVVVVVVVV
-
     function geocodeLatLng(geocoder) {
 
         var latlng = {
@@ -236,7 +243,7 @@ $(document).ready(function () {
                     currentPhysicalAddress = results[0].formatted_address
                     //display the coordinates and address where we are
                     $("#GPS").text(currentPhysicalAddress);
-
+                    
                 } else {
                     window.alert('No results found');
                 }
@@ -249,14 +256,14 @@ $(document).ready(function () {
     //Adding and updating the information in the table
     function tableContent(buttonAddress) {
 
-        //add to table section
-        var $td = $('<tr><th scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
+        //add to table section //! Added classes for potential text switch
+        var $td = $('<tr><th class="target clicked" scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
 
         //prevents duplicate table rows being created
         if ($(".favButts").length >= $("tr").length) {
             $("#tableInsertTarget").append($td)
-        }
-    }
+        };
+    };
 
     //Refreshing tables
     function tableRefresh() {
@@ -264,13 +271,27 @@ $(document).ready(function () {
         userPath.once("value")
             .then(function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
-
+                    
                     var childData = childSnapshot.val().address;
 
                     calculateAddressCoordinates(childData);
                 });
             });
     }
+
+    //todo Working to get the text to switch between destination address and destination name.
+    // $(document).on("click", ".target", function(childSnapshot){
+    //     userUID = firebase.auth().currentUser.uid
+    //     userPath = database.ref("users/" + userUID)
+
+    //     if ($(this).hasClass('clicked')) {
+    //         $(this).text(userPath.childSnapshot.val().name).toggleClass('clicked');
+    //     } else {
+    //         $(this).text(buttonAddress).toggleClass('clicked');
+    //     }
+    // });
+
+
 
     //************************************ */
     //END MAPS/DISTANCE Functions & Methods ^^^^^^^^^^^^
@@ -286,8 +307,11 @@ $(document).ready(function () {
         var darkSkyCurrLat = currentLatitude.toFixed(4);
         var darkSkyCurrLng = currentLongitude.toFixed(4);
 
+        var darkSkyDestLat = destLatitude.toFixed(4);
+        var darkSkyDestLng = destLongitude.toFixed(4);
+
         var proxy = 'https://cors-anywhere.herokuapp.com/'
-        var currapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + darkSkyCurrLat + "," + darkSkyCurrLng;
+        var currapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + darkSkyCurrLat + "," + darkSkyCurrLng;
 
         $.ajax({
             url: proxy + currapiLinkDS,
@@ -340,7 +364,7 @@ $(document).ready(function () {
         });
 
         // calling weather for destination
-        var destapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + destLatitude + "," + destLongitude;
+        var destapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + darkSkyDestLat + "," + darkSkyDestLng;
 
         $.ajax({
             url: proxy + destapiLinkDS,
@@ -406,6 +430,17 @@ $(document).ready(function () {
     $(document).on("submit", "#signIn", signInFn)
     //Login/Account Invocation
     firebase.auth().onAuthStateChanged(authStateChangeListener);
+    //Sign-Out Invocation
+    $("#sign-out").on("click", function () {
+        //Sign-Out Function
+        firebase.auth().signOut()
+            .then(function () {
+                alert("Sign in or Create an Account to continue")
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
 
     //sets time to run. will tie in all data calls to this to enable live refreshing
     setTime();
@@ -425,11 +460,15 @@ $(document).ready(function () {
         userPath.push(newDest);
     });
 
+    //DATABASE/MAPS- remove destination
+    $(document).on("click", ".removeDestination", removeSavedDest)
+
     //Will pull address from saved destination, and run to see desired time and weather.
     $(document).on("click", ".favButts", function (event) {
         //grabs the address stored in the id of the botton
         var buttonAddress = event.target.id
         calculateAddressCoordinates(buttonAddress);
+
     })
 
 
@@ -438,6 +477,7 @@ $(document).ready(function () {
     //END Calls and Invocations
     //**************************************** */
 
+<<<<<<< HEAD
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
     $(document).load('particles-js', 'particles.json', function () {
         console.log('callback - particles.js config loaded');
@@ -445,3 +485,6 @@ $(document).ready(function () {
 
 });
 
+=======
+});
+>>>>>>> 78b8e4d2935786c26c8734ce5b7b86b2737cbe0c

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="Assets/CSS/style.css">
     <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    crossorigin="anonymous">
 </head>
 
 <body>
@@ -22,13 +24,15 @@
                     <form action="" id="signUp">
                         <input type="text" placeholder="Enter a Username" id="userNameEntry">
                         <input type="text" placeholder="Enter an Email" id="emailEntry">
-                        <input type="text" placeholder="Enter a Password" id="passwordEntry">
+                        <input type="password" id="passwordEntry" name="password" placeholder="Enter a Password"
+                            data-toggle="password">
+                        <!-- <input type="text" placeholder="Enter a Password" id="passwordEntry"> -->
                         <input id="createUser" type="submit" value="START">
                     </form>
                     <h1>Sign In</h1>
                     <form action="" id="signIn">
                         <input type="text" placeholder="Enter an Email" id="emailLogin">
-                        <input type="text" placeholder="Enter a Password" id="passwordLogin">
+                        <input type="password" id="passwordLogin" name="password" placeholder="Enter a Password">
                         <input id="signinUser" type="submit" placeholder="Sign-in">
                     </form>
                 </div>
@@ -36,57 +40,54 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Let's Travel!</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Let's Travel! <span class="time dispArea" id="time"></span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Let's Travel<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.html">Let's Travel <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="documentation.html">Documentation</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="sign-out">Sign Out</a>
+                </li>
             </ul>
         </div>
     </nav>
-
     <div class="container mainContainer">
         <div class="row mainRow justify-content-center">
             <div class="col-12 mainColumn">
                 <div class="row">
-                    <div id="current-items" class="col-sm-12 col-md-6">
-                        <div>
-                            <h5>Current Location: </h5>
-                            <span class="location dispArea" id="GPS">
-                            </span>
-                        </div>
-                        <div>
-                            <h5>Current Destination: </h5>
-                            <span class="location dispArea" id="destGPS">
-                            </span>
-                        </div>
-                        <div>
-                            <h5>Current Time: </h5>
-                            <span class="time dispArea" id="time"></span>
+                    <div id="current-items" class="col-sm-12 col-md-6  dispArea">
+                        <div class="row">
+                            <div class="col-12">
+                                <div>
+                                    <h5>Current Location: </h5>
+                                    <span class="location" id="GPS">
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id="dest-search" class="col-sm-12 col-md-6">
-                        <form class="form-inline my-2 my-lg-0">
-                            <input id="dest-name" class="form-control mr-sm-2" type="text" placeholder="Destination Name"
-                                aria-label="Destination">
-                            <input id="dest-input" class="form-control mr-sm-2" type="text" placeholder="Destination Address"
-                                aria-label="Destination">
-                            <button id="dest-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add
-                                Destination</button>
-                        </form>
+                    <div id="current-items" class="col-sm-12 col-md-6  dispArea">
+                        <div class="row">
+                            <div class="col-12">
+                                <div>
+                                    <h5>Current Destination: </h5>
+                                    <span class="location" id="destGPS">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- * Remove seperate trip length and trip time. -->
+
                 <div class="row favRow justify-content-center">
                     <div id="new-destinations" class="col-12 favoriteButtons">
                     </div>
@@ -105,6 +106,17 @@
                             <tbody class="tableSection" id="tableInsertTarget">
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="dest-search" class="col-sm-12">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input id="dest-name" class="form-control mr-sm-2" type="text" placeholder="Destination Name"
+                                aria-label="Destination">
+                            <input id="dest-input" class="form-control mr-sm-2" type="text" placeholder="Destination Address"
+                                aria-label="Destination">
+                            <button id="dest-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+                        </form>
                     </div>
                 </div>
                 <div class="row weatherDiv">
@@ -155,10 +167,13 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <div id="particles-js"></div>
 
     <script src="Assets/Javascript/particles.js"></script>
 
+=======
+>>>>>>> 78b8e4d2935786c26c8734ce5b7b86b2737cbe0c
     <!-- JQuery Library -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
