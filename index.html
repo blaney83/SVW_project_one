@@ -66,7 +66,7 @@
                             </span>
                         </div>
                         <div>
-                            <h5>Destination: </h5>
+                            <h5>Current Destination: </h5>
                             <span class="location dispArea" id="destGPS">
                             </span>
                         </div>
@@ -86,20 +86,25 @@
                         </form>
                     </div>
                 </div>
-                <div class="row infoRow">
-                    <div class="col-sm-12 col-md-6 timeDiv">
-                        <div class="row">
-                            <div class="col-sm-6" id="trip-info-target">
-                                <h5>Trip Length</h5>
-                            </div>
-                        </div>
+                <!-- * Remove seperate trip length and trip time. -->
+                <div class="row favRow justify-content-center">
+                    <div id="new-destinations" class="col-12 favoriteButtons">
                     </div>
-                    <div class="col-sm-12 col-md-6 timeDiv">
-                        <div class="row">
-                            <div class="col-sm-12" id="arrival-time-target">
-                                <h5>Arrival Time =</h5>
-                            </div>
-                        </div>
+                </div>
+                <div class="row tableRow">
+                    <div class="col-12 tableColumn">
+                        <table class="table table-responsive-md">
+                            <thead class="tableSection">
+                                <tr>
+                                    <th scope="col">Destination</th>
+                                    <th scope="col">Trip Length</th>
+                                    <th scope="col">Arrival Time</th>
+                                    <th scope="col">Distance</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tableSection" id="tableInsertTarget">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="row weatherDiv">
@@ -144,49 +149,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="row favRow justify-content-center">
-                    <div id="new-destinations" class="col-12 favoriteButtons">
-                    </div>
-                    <div class="row tableRow">
-                        <div class="col-12 tableColumn">
-                            <table class="table table-responsive-md">
-                                <thead class="tableSection">
-                                    <tr>
-                                        <th scope="col">Destination</th>
-                                        <th scope="col">Trip Length</th>
-                                        <th scope="col">Arrival Time</th>
-                                        <th scope="col">Distance</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="tableSection" id="tableInsertTarget">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            </div>
+        </div>
+    </div>
 
-                    <!-- JQuery Library -->
-                    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                        crossorigin="anonymous"></script>
-                    <!-- Firebase -->
-                    <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
-                    <!-- Google API -->
-                    <script src="https://apis.google.com/js/platform.js" async defer></script>
-                    <!-- Moment CDN -->
-                    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
-                    <!-- AJAX JavaScript -->
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-                        crossorigin="anonymous"></script>
-                    <!-- Bootstrap JavaScript -->
-                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-                        crossorigin="anonymous"></script>
-                    <!-- Do we need this called out as a script tag? -->
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm67gwaaHPjy9Qdi2s4ge9ZT-6c02U2Sw"></script>
-                    <!-- &libraries=places -->
-                    <!--maps api-->
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                    <!--distance matrix api-->
-                    <script src="Assets/Javascript/script.js"></script>
-                    <script src="Assets/Javascript/weather.js"></script>
+
+
+
+    <!-- JQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
+    <!-- Google API -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Moment CDN -->
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+    <!-- AJAX JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <!-- Do we need this called out as a script tag? -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm67gwaaHPjy9Qdi2s4ge9ZT-6c02U2Sw"></script>
+    <!-- &libraries=places -->
+    <!--maps api-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--distance matrix api-->
+    <script src="Assets/Javascript/script.js"></script>
+    <!-- <script src="Assets/Javascript/weather.js"></script> -->
 </body>
 
 </html>

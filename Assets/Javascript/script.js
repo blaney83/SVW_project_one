@@ -177,7 +177,7 @@ $(document).ready(function () {
             destination: { lat: destLatitude, lng: destLongitude },
             // document.getElementById("location-2").value,
             travelMode: google.maps.TravelMode.DRIVING,
-            unitSystem: google.maps.UnitSystem.METRIC
+            unitSystem: google.maps.UnitSystem.IMPERIAL,
         }
         // Routing
         directionsService.route(request, function (result, status) {
@@ -235,7 +235,7 @@ $(document).ready(function () {
                 if (results[0]) {
                     currentPhysicalAddress = results[0].formatted_address
                     //display the coordinates and address where we are
-                    $("#GPS").text("lat: " + currentLatitude + " lng: " + currentLongitude + " address: " + currentPhysicalAddress);
+                    $("#GPS").text(currentPhysicalAddress);
 
                 } else {
                     window.alert('No results found');
@@ -281,19 +281,12 @@ $(document).ready(function () {
     //************************************* */
 
     //ajax calling current weather data for current location
-
-
-    //var longNlatCurrent = $("#longNLatVar")
-    // var longNlatCurrent = "33.303176,-111.839866"
-
-
     function findWeather() {
 
         var darkSkyCurrLat = currentLatitude.toFixed(4);
         var darkSkyCurrLng = currentLongitude.toFixed(4);
 
         var proxy = 'https://cors-anywhere.herokuapp.com/'
-        // var proxy = 'https://git.heroku.com/fast-thicket-34943.git/';
         var currapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + darkSkyCurrLat + "," + darkSkyCurrLng;
 
         $.ajax({
@@ -399,9 +392,6 @@ $(document).ready(function () {
         });
     }
 
-
-
-
     //************************************ */
     //END Weather Functions and Methods ^^^^^^^^^^^
     //************************************* */
@@ -440,7 +430,6 @@ $(document).ready(function () {
         //grabs the address stored in the id of the botton
         var buttonAddress = event.target.id
         calculateAddressCoordinates(buttonAddress);
-
     })
 
     //**************************************** */

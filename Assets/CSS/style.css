@@ -59,7 +59,7 @@ h5{
     border-style: solid;
     border-width: 2px;
     border-radius: .5rem;
-    /* padding: 2rem 1rem; */
+    padding: 2.5%;
     background-color: rgb(25, 83, 83);
     color: white;
 }
@@ -161,8 +161,8 @@ h6{
 
 .weathCont {
     background-color: blue;
-    width: 90%;
-    margin: 5%;
+    width: 85%;
+    margin: 2.5%;
     border: black;
     border-style: solid;
     border-width: 2px;
