@@ -127,65 +127,21 @@ $(document).ready(function () {
 
     //Display Current Time  
     function getTime() {
+        console.log("counting")
         currentTime = moment().format("hh:mm a");
         $("#time").text(currentTime);
+        console.log(currentTime)
         tableRefresh();
-    };
+    }
 
     //Interval Definition
     function setTime() {
         setInterval(getTime, 60000);
-    };
+    }
     //************************************ */
     //END Clock and Interval Functions & Methods ^^^^^^^^
     //************************************ */
 
-    setTime();
-    //todo This is a work in progress to get saved buttons to access saved address.  Current issue is getting these buttons to run at all, due to the fact that the buttons are set up through an asychronus function, so when it comes time to run the .on("click", function) it doesn't read the buttons.  Will look into this tomorrow.  May possibly roll into Monday, because I have to work tomorrow.
-    // //Will pull address from saved destination, and run to see desired time and weather.
-    // $("#School").on("click", function () {
-    //     event.preventDefault();
-
-    //     console.log("test");
-    //     userID = firebase.auth().currentUser.displayName
-    //     userUID = firebase.auth().currentUser.uid
-    //     userPath = database.ref("users/" + userUID)
-
-    //     return userPath.on("child_added", function (childSnapshot) {
-    //         destAddy = childSnapshot.val().address
-
-    //         console.log(destAddy);
-
-    //     });
-    // });
-
-    //Saves information for new destination
-    $("#dest-btn").on("click", function (event) {
-        event.preventDefault();
-
-        var destInput = $("#dest-input").val().trim();
-        var destName = $("#dest-name").val().trim();
-        var newDest = {
-            "name": destName,
-            "address": destInput
-        };
-
-        userPath.push(newDest);
-
-    });
-
-    //WORKING ON MAPS/DISTANCE MATRIX API VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-
-    //this is the Distance Matrix API Code
-    var currentLatitude;
-    var currentLongitude;
-    var currentPhysicalAddress;
-    var destLatitude;
-    var destLongitude;
-    // Create a DirectionsService object to use the route method and get a result for our request
-    var directionsService = new google.maps.DirectionsService();
-    //run Geo initialization outright
-    initGeoCode();
     //************************************ */
     //MAPS/DISTANCE Functions & Methods VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
     //************************************* */
@@ -209,7 +165,7 @@ $(document).ready(function () {
         });
     } else {
         // Browser doesn't support Geolocation
-        alert("Your browser doesnt support Geolocation Services :(")
+        alert("Your browser doesnt support Geolocation Services:(")
     }
 
     // Define calcRoute function
@@ -221,7 +177,7 @@ $(document).ready(function () {
             destination: { lat: destLatitude, lng: destLongitude },
             // document.getElementById("location-2").value,
             travelMode: google.maps.TravelMode.DRIVING,
-            unitSystem: google.maps.UnitSystem.IMPERIAL
+            unitSystem: google.maps.UnitSystem.IMPERIAL,
         }
         // Routing
         directionsService.route(request, function (result, status) {
@@ -231,7 +187,7 @@ $(document).ready(function () {
                 tripDist = result.routes[0].legs[0].distance.text;
                 var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
                 shortArrivalTime = moment().add(intTravTime, "s").format("h:mm a");
-                
+
                 //Get distance and time amd display
                 $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + tripDist + "<br> Duration: " + parsTravTime)
                 //display arrival time
@@ -247,7 +203,6 @@ $(document).ready(function () {
 
     function initGeoCode() {
         destGeocoder = new google.maps.Geocoder();
-        // console.log(navigator.geolocation)
     }
 
     function calculateAddressCoordinates(buttonAddress) {
@@ -287,9 +242,9 @@ $(document).ready(function () {
                 }
             } else {
                 window.alert('Geocoder failed due to: ' + status);
-            };
+            }
         });
-    };
+    }
 
     //Adding and updating the information in the table
     function tableContent(buttonAddress) {
@@ -326,19 +281,12 @@ $(document).ready(function () {
     //************************************* */
 
     //ajax calling current weather data for current location
-
-
-    //var longNlatCurrent = $("#longNLatVar")
-    // var longNlatCurrent = "33.303176,-111.839866"
-
-
     function findWeather() {
 
         var darkSkyCurrLat = currentLatitude.toFixed(4);
         var darkSkyCurrLng = currentLongitude.toFixed(4);
 
         var proxy = 'https://cors-anywhere.herokuapp.com/'
-        // var proxy = 'https://git.heroku.com/fast-thicket-34943.git/';
         var currapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + darkSkyCurrLat + "," + darkSkyCurrLng;
 
         $.ajax({
@@ -444,9 +392,6 @@ $(document).ready(function () {
         });
     }
 
-
-
-
     //************************************ */
     //END Weather Functions and Methods ^^^^^^^^^^^
     //************************************* */
@@ -485,7 +430,6 @@ $(document).ready(function () {
         //grabs the address stored in the id of the botton
         var buttonAddress = event.target.id
         calculateAddressCoordinates(buttonAddress);
-
     })
 
     //**************************************** */
