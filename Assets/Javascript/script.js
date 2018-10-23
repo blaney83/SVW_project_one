@@ -412,10 +412,9 @@ $(document).ready(function () {
     //Sign-Out Invocation
     $("#sign-out").on("click", function() {
         //Sign-Out Function
-            console.log("Click");
             firebase.auth().signOut()
             .then(function () {
-                console.log("Sign-out successful");
+                alert("Sign in or Create an Account to continue")
             })
             .catch(function (error) {
                 console.log(error);
