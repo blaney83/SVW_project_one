@@ -300,7 +300,7 @@ $(document).ready(function () {
         var darkSkyCurrLng = currentLongitude.toFixed(4);
 
         var proxy = 'https://cors-anywhere.herokuapp.com/'
-        var currapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + darkSkyCurrLat + "," + darkSkyCurrLng;
+        var currapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + darkSkyCurrLat + "," + darkSkyCurrLng;
 
         $.ajax({
             url: proxy + currapiLinkDS,
@@ -353,7 +353,7 @@ $(document).ready(function () {
         });
 
         // calling weather for destination
-        var destapiLinkDS = "https://api.darksky.net/forecast/087545328826e2aa2daf703ad2508bfd/" + destLatitude + "," + destLongitude;
+        var destapiLinkDS = "https://api.darksky.net/forecast/e2dcc1b4add1f2425bf0378b56f48bd6/" + destLatitude + "," + destLongitude;
 
         $.ajax({
             url: proxy + destapiLinkDS,
