@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     // Initialize Firebase section VVVVVVVVVVVVV
@@ -94,7 +93,7 @@ $(document).ready(function () {
             //change login visibility
             $(".signInPage").css({ "opacity": "0" })
             $(".signInPage").css({ "z-index": "0" })
-
+            
             alert("Welcome Back " + userID);
         } else {
             // //perform login operations
@@ -107,17 +106,17 @@ $(document).ready(function () {
             console.log("listening")
             destName = childSnapshot.val().name
             destAddress = childSnapshot.val().address
-
+            
             var $newDest = $("<button>").addClass("favButts").attr("id", destAddress).text(destName);
-
+            
 
             $("#new-destinations").append($newDest);
-
+            
             $("form").trigger("reset");
         }).then(
             //important to get the table and clock to generate upon page load, but after the responses return
             getTime()
-        );
+            );
     };
     //************************************ */
     //END Login/Account Functions & Methods ^^^^^^^^^^^^^^^^^^^^^
@@ -173,7 +172,7 @@ $(document).ready(function () {
 
     // Define calcRoute function
     function calcRoute(buttonAddress) {
-        //create request
+        //create request 
         var request = {
             origin: { lat: currentLatitude, lng: currentLongitude },
             // document.getElementById("location-1").value,
@@ -191,10 +190,6 @@ $(document).ready(function () {
                 var arrivalTime = moment().add(intTravTime, "s").format("dddd, MMMM Do YYYY, h:mm:ss a");
                 shortArrivalTime = moment().add(intTravTime, "s").format("h:mm a");
 
-                //Get distance and time amd display
-                $("#trip-info-target").html("<h5>Trip Length</h5><br>Distance= " + tripDist + "<br> Duration: " + parsTravTime)
-                //display arrival time
-                $("#arrival-time-target").html("<h5>Arrival Time = </h5><br>" + arrivalTime)
                 tableContent(buttonAddress);
                 findWeather();
             } else {
@@ -217,7 +212,7 @@ $(document).ready(function () {
                 destCoordinates = results[0].geometry.location
                 destLatitude = destCoordinates.lat()
                 destLongitude = destCoordinates.lng()
-                $("#destMap").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+destLatitude+"+"+destLongitude);
+                $("#destMap").attr("href", "https://www.google.com/maps/dir/?api=1&destination=" + destLatitude + "+" + destLongitude);
             } else {
                 alert('Geocode was not successful. Please re-enter your address or business name. Unsuccessful for the following reason: ' + status);
             }
@@ -253,14 +248,14 @@ $(document).ready(function () {
     //Adding and updating the information in the table
     function tableContent(buttonAddress) {
 
-        //add to table section
-        var $td = $('<tr><th scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
+        //add to table section //! Added classes for potential text switch
+        var $td = $('<tr><th class="target clicked" scope="row">' + buttonAddress + '</th><td>' + parsTravTime + '</td><td>' + shortArrivalTime + '</td><td>' + tripDist + '</td></tr>')
 
         //prevents duplicate table rows being created
         if ($(".favButts").length >= $("tr").length) {
             $("#tableInsertTarget").append($td)
-        }
-    }
+        };
+    };
 
     //Refreshing tables
     function tableRefresh() {
@@ -268,13 +263,27 @@ $(document).ready(function () {
         userPath.once("value")
             .then(function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
-
+                    
                     var childData = childSnapshot.val().address;
 
                     calculateAddressCoordinates(childData);
                 });
             });
     }
+
+    //todo Working to get the text to switch between destination address and destination name.
+    // $(document).on("click", ".target", function(childSnapshot){
+    //     userUID = firebase.auth().currentUser.uid
+    //     userPath = database.ref("users/" + userUID)
+
+    //     if ($(this).hasClass('clicked')) {
+    //         $(this).text(userPath.childSnapshot.val().name).toggleClass('clicked');
+    //     } else {
+    //         $(this).text(buttonAddress).toggleClass('clicked');
+    //     }
+    // });
+
+
 
     //************************************ */
     //END MAPS/DISTANCE Functions & Methods ^^^^^^^^^^^^
@@ -411,9 +420,9 @@ $(document).ready(function () {
     //Login/Account Invocation
     firebase.auth().onAuthStateChanged(authStateChangeListener);
     //Sign-Out Invocation
-    $("#sign-out").on("click", function() {
+    $("#sign-out").on("click", function () {
         //Sign-Out Function
-            firebase.auth().signOut()
+        firebase.auth().signOut()
             .then(function () {
                 alert("Sign in or Create an Account to continue")
             })
